@@ -29,7 +29,7 @@ export default function Home() {
       <div className="p-6 text-center">
         <p className="text-lg mb-4">No hay productos disponibles.</p>
         {process.env.NODE_ENV === "development" && (
-          <pre className="bg-gray-200 p-4 rounded overflow-x-auto">
+          <pre className="bg-gray-200 p-4 overflow-x-auto">
             {JSON.stringify(rawData, null, 2)}
           </pre>
         )}
@@ -50,25 +50,21 @@ export default function Home() {
           Categorías
         </h1>
 
-        <div className="grid gap-6 grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))]">
+        <div className="flex overflow-x-auto space-x-6 pb-4">
           {categorias.map((cat, i) => (
             <div
               key={i}
-              className="overflow-hidden flex flex-col transition-transform duration-200 hover:shadow-lg"
+              className="flex-none w-64 md:w-72 lg:w-80 overflow-hidden flex flex-col transition-transform duration-200 hover:shadow-lg"
             >
-              <div className="overflow-hidden">
+              <div className="overflow-hidden bg-[#ede3ca] h-64 md:h-72 lg:h-80">
                 <img
                   src={cat.imagen}
                   alt={cat.nombre}
-                  className=" h-[400px] w-full  bg-[#ede3ca] transition-transform duration-300 transform hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
                 />
               </div>
-
               <div className="p-4 flex flex-col justify-between flex-1">
-                <div>
-                  <h2 className="text-lg font-semibold mb-2">{cat.nombre}</h2>
-                </div>
-
+                <h2 className="text-lg font-semibold mb-2">{cat.nombre}</h2>
                 <button className="mt-4 py-2 bg-[#e5c546] text-white border-none cursor-pointer transition-colors duration-200 hover:bg-[#95802d]">
                   Ver más
                 </button>
@@ -77,26 +73,25 @@ export default function Home() {
           ))}
         </div>
       </div>
-      
-      <div className="p-6 max-w-[1200px] mx-auto">
+
+      <div className="p-6 max-w-[1200px] mx-auto mt-12">
         <h1 className="text-center text-2xl md:text-3xl font-bold mb-8 md:mb-12">
           Productos Destacados
         </h1>
 
-        <div className="grid gap-6 grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))]">
+        <div className="flex overflow-x-auto space-x-6 pb-4">
           {productos.map((producto) => (
             <div
               key={producto._id}
-              className="overflow-hidden flex flex-col transition-transform duration-200 hover:shadow-lg"
+              className="flex-none w-64 md:w-72 lg:w-80 overflow-hidden flex flex-col transition-transform duration-200 hover:shadow-lg"
             >
-              <div className="overflow-hidden">
+              <div className="overflow-hidden bg-[#ede3ca] h-64 md:h-72 lg:h-80">
                 <img
                   src={producto.imatge}
                   alt={producto.nom}
-                  className="p-5 h-[400px] w-full object-contain bg-[#ede3ca] transition-transform duration-300 transform hover:scale-105"
+                  className="w-full h-full object-contain p-5 transition-transform duration-300 transform hover:scale-105"
                 />
               </div>
-
               <div className="p-4 flex flex-col justify-between flex-1">
                 <div>
                   <h2 className="text-lg font-semibold mb-2">{producto.nom}</h2>
@@ -104,7 +99,6 @@ export default function Home() {
                     {producto.preu} €
                   </p>
                 </div>
-
                 <button className="mt-4 py-2 bg-[#e5c546] text-white border-none cursor-pointer transition-colors duration-200 hover:bg-[#95802d]">
                   Comprar
                 </button>
