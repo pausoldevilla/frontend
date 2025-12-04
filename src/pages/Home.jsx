@@ -36,7 +36,6 @@ export default function Home() {
       </div>
     );
 
-  // Lista fija de categorías
   const categorias = [
     { nombre: "Interior", imagen: "img/interior.png" },
     { nombre: "Exterior", imagen: "img/exterior.png" },
@@ -46,7 +45,6 @@ export default function Home() {
 
   return (
     <>
-          {/* Categorías */}
       <div className="p-6 max-w-[1200px] mx-auto">
         <h1 className="text-center text-2xl md:text-3xl font-bold mb-8 md:mb-12">
           Categorías
@@ -80,7 +78,6 @@ export default function Home() {
         </div>
       </div>
       
-      {/* Productos Destacados */}
       <div className="p-6 max-w-[1200px] mx-auto">
         <h1 className="text-center text-2xl md:text-3xl font-bold mb-8 md:mb-12">
           Productos Destacados

@@ -6,7 +6,6 @@ export default function Footer() {
     <footer className="bg-gray-100 border-t border-gray-300 mt-10">
       <div className="container mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
         
-        {/* Sección enlaces rápidos */}
         <div>
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Enlaces</h3>
           <ul className="flex flex-col gap-2 text-gray-600">
@@ -17,7 +16,6 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Sección contacto */}
         <div>
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Contacto</h3>
           <ul className="flex flex-col gap-2 text-gray-600">
@@ -27,7 +25,6 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Sección redes sociales */}
         <div>
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Síguenos</h3>
           <div className="flex gap-4 text-gray-600">
@@ -38,7 +35,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Copyright */}
       <div className="bg-gray-200 text-center py-4 text-sm text-gray-600">
         © {new Date().getFullYear()} Soldevilla. Todos los derechos reservados.
       </div>

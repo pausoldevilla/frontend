@@ -5,6 +5,7 @@ export default function NavBar() {
     const [activeSubmenu, setActiveSubmenu] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [recentSearches, setRecentSearches] = useState([]);
+    const [menuMobileOpen, setMenuMobileOpen] = useState(false);
 
     useEffect(() => {
         const stored = JSON.parse(localStorage.getItem("recentSearches") || "[]");
@@ -26,11 +27,20 @@ export default function NavBar() {
     const leftMenuItems = ["busqueda", "interior", "exterior", "suculentas", "florales"];
     const rightMenuItems = ["jardines", "acerca", "contacto"];
 
+
+    const submenu = (items) => (
+        <div className="flex flex-col p-4 ml-8 gap-2">
+            {items.map((item, i) => (
+                <a key={i} href="#" className="text-gray-700 hover:text-green-600">{item}</a>
+            ))}
+        </div>
+    );
+
     const renderLeftSubmenu = () => {
         switch (activeSubmenu) {
             case "busqueda":
                 return (
-                    <div id="busqueda" className="flex flex-col relative bg-white p-4">
+                    <div className="flex flex-col relative p-4 ml-8 gap-2">
                         <div className="flex items-center gap-2 relative">
                             <input
                                 type="text"
@@ -40,121 +50,44 @@ export default function NavBar() {
                                 onKeyDown={(e) => e.key === "Enter" && handleSearchEnter()}
                                 className="border-b border-gray-300 outline-none px-0 pr-5 py-1 w-56 text-sm focus:border-green-500"
                             />
-                            <span
-                                className="absolute right-0 top-1 cursor-pointer text-gray-500 hover:text-gray-700"
-                                onClick={() => setSearchQuery("")}
-                            >
-                                ✕
-                            </span>
+                            <span className="absolute right-0 top-1 cursor-pointer text-gray-500 hover:text-gray-700"
+                                onClick={() => setSearchQuery("")}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M256-213.85 213.85-256l224-224-224-224L256-746.15l224 224 224-224L746.15-704l-224 224 224 224L704-213.85l-224-224-224 224Z" /></svg></span>
                         </div>
                         <div className="mt-2 flex flex-col gap-1">
-                            {searchQuery === ""
-                                ? recentSearches.map((s, i) => (
-                                    <a key={i} href="#" className="text-sm text-gray-700 hover:text-green-600">
-                                        {s}
-                                    </a>
-                                ))
-                                : null}
+                            {searchQuery === "" && recentSearches.map((s, i) => (
+                                <a key={i} href="#" className="text-sm text-gray-700 hover:text-green-900">
+                                    {s}
+                                </a>
+                            ))}
                         </div>
-                        <div id="searchResults" className={searchQuery ? "block" : "hidden"}></div>
                     </div>
                 );
-
-            case "interior":
-                return (
-                    <div id="interior" className="flex flex-col bg-white p-4">
-                        {["Verde clásico", "Tropical", "Compactas", "Colgantes"].map((item, i) => (
-                            <a key={i} href="#" className="text-gray-700 hover:text-green-600">
-                                {item}
-                            </a>
-                        ))}
-                    </div>
-                );
-
-            case "exterior":
-                return (
-                    <div id="exterior" className="flex flex-col bg-white p-4">
-                        {["Sol", "Sombra", "Mediterráneas", "Arbustivas"].map((item, i) => (
-                            <a key={i} href="#" className="text-gray-700 hover:text-green-600">
-                                {item}
-                            </a>
-                        ))}
-                    </div>
-                );
-
-            case "suculentas":
-                return (
-                    <div id="suculentas" className="flex flex-col bg-white p-4">
-                        {["Cactus", "Mini suculentas", "Colección", "Premium"].map((item, i) => (
-                            <a key={i} href="#" className="text-gray-700 hover:text-green-600">
-                                {item}
-                            </a>
-                        ))}
-                    </div>
-                );
-
-            case "florales":
-                return (
-                    <div id="florales" className="flex flex-col bg-white p-4">
-                        {["Estacionales", "Perennes", "Color intenso", "Delicadas"].map((item, i) => (
-                            <a key={i} href="#" className="text-gray-700 hover:text-green-600">
-                                {item}
-                            </a>
-                        ))}
-                    </div>
-                );
-
-            default:
-                return null;
+            case "interior": return submenu(["Verde clásico", "Tropical", "Compactas", "Colgantes"]);
+            case "exterior": return submenu(["Sol", "Sombra", "Mediterráneas", "Arbustivas"]);
+            case "suculentas": return submenu(["Cactus", "Mini suculentas", "Colección", "Premium"]);
+            case "florales": return submenu(["Estacionales", "Perennes", "Color intenso", "Delicadas"]);
+            default: return null;
         }
     };
 
     const renderRightSubmenu = () => {
         switch (activeSubmenu) {
-            case "jardines":
-                return (
-                    <div id="jardines" className="flex flex-col bg-white p-4">
-                        <a href="#" className="text-gray-700 hover:text-green-600">
-                            Carrer de Girona 208, Sabadell
-                        </a>
-                    </div>
-                );
-
-            case "acerca":
-                return (
-                    <div id="acerca" className="flex flex-col bg-white p-4">
-                        {["Historia", "Misión", "Equipo"].map((item, i) => (
-                            <a key={i} href="#" className="text-gray-700 hover:text-green-600">
-                                {item}
-                            </a>
-                        ))}
-                    </div>
-                );
-
-            case "contacto":
-                return (
-                    <div id="contacto" className="flex flex-col bg-white p-4">
-                        {["Email", "Teléfono", "Ubicación"].map((item, i) => (
-                            <a key={i} href="#" className="text-gray-700 hover:text-green-600">
-                                {item}
-                            </a>
-                        ))}
-                    </div>
-                );
-
-            default:
-                return null;
+            case "jardines": return submenu(["Carrer Girona 208, Sabadell"]);
+            case "acerca": return submenu(["Historia", "Misión", "Equipo"]);
+            case "contacto": return submenu(["Email", "Teléfono", "Ubicación"]);
+            default: return null;
         }
     };
 
     return (
-        <header className="fixed top-0 left-0 w-full h-24 bg-white border-b border-gray-200 z-50">
-            <div className="top-row flex justify-center items-center p-2.5 relative bg-gray-50 shadow">
-                {/* Left Menu */}
-                <div className="menu-left absolute left-10 top-1/2 -translate-y-1/2 flex gap-6 items-center">
+        <header className="fixed top-0 left-0 w-full border-b border-gray-200 z-50 bg-white">
+
+            <div className="hidden lg:flex justify-center items-center p-3 relative bg-white shadow">
+
+                <div className="absolute left-10 flex gap-6 items-center">
                     {leftMenuItems.map((item) => (
-                        <div key={item} className="dropdown" onMouseEnter={() => setActiveSubmenu(item)}>
-                            <a href="#" className="drop-link text-gray-800 hover:text-green-600 flex items-center gap-1">
+                        <div key={item} onMouseEnter={() => setActiveSubmenu(item)}>
+                            <a href="#" className="text-gray-800 hover:text-green-600">
                                 {item === "busqueda" ? (
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +96,7 @@ export default function NavBar() {
                                         width="24px"
                                         fill="#1f1f1f"
                                     >
-                                        <path d="m777.65-143.89-247.89-248q-29.61 24.77-68.3 38.22-38.69 13.44-79.23 13.44-100.45 0-169.78-69.36t-69.33-169.5q0-100.14 69.25-169.6 69.26-69.46 169.5-69.46t169.71 69.42q69.46 69.43 69.46 169.67 0 41.91-14.08 80.75-14.08 38.85-37.58 67.28l248 247.41-39.73 39.73Zm-395.57-252.3q76.8 0 129.9-53.02 53.1-53.03 53.1-130 0-76.98-53.1-129.98-53.1-53-130-53t-129.9 53.02q-53 53.02-53 130 0 76.98 53.01 129.98 53.02 53 129.99 53Z" />
+                                        <path d="M781.69-136.92 530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14-102.55 0-173.58-71.01-71.03-71.01-71.03-173.54 0-102.52 71.01-173.6 71.01-71.07 173.54-71.07 102.52 0 173.6 71.03 71.07 71.03 71.07 173.58 0 42.85-14.38 81.85-14.39 39-38.39 67.84l251.23 251.23-42.15 42.16ZM380.77-395.38q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z" />
                                     </svg>
                                 ) : (
                                     item.charAt(0).toUpperCase() + item.slice(1)
@@ -173,32 +106,88 @@ export default function NavBar() {
                     ))}
                 </div>
 
-                {/* Logo */}
                 <div className="logo font-serif font-bold text-lg tracking-wider flex flex-col items-center justify-center">
-                    <Link to="/" className="flex flex-col items-center justify-center text-black no-underline">
-                        <img src="img/logo.png" alt="logo" className="w-12 h-12" />
+                    <Link to="/" className="flex flex-col items-center text-black no-underline">
+                        <img src="img/logo.png" className="w-12 h-12" />
                         soldevilla
                     </Link>
                 </div>
 
-                {/* Right Menu */}
-                <div className="menu-right absolute right-10 top-1/2 -translate-y-1/2 flex gap-6 items-center">
+                <div className="absolute right-10 flex gap-6 items-center">
                     {rightMenuItems.map((item) => (
-                        <div key={item} className="dropdown" onMouseEnter={() => setActiveSubmenu(item)}>
-                            <a href="#" className="drop-link text-gray-800 hover:text-green-600">
+                        <div key={item} onMouseEnter={() => setActiveSubmenu(item)}>
+                            <a href="#" className="text-gray-800 hover:text-green-600">
                                 {item.charAt(0).toUpperCase() + item.slice(1)}
                             </a>
                         </div>
                     ))}
-                    <Link to="/login" className="text-gray-800 hover:text-green-600">
-                        Mi cuenta</Link>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
-                        <path d="M289.42-105.77q-28.14 0-47.88-19.7-19.73-19.7-19.73-47.84 0-28.15 19.7-47.88 19.7-19.73 47.84-19.73 28.14 0 47.88 19.7 19.73 19.7 19.73 47.84 0 28.14-19.7 47.88-19.7 19.73-47.84 19.73Zm380.42 0q-28.14 0-47.88-19.7-19.73-19.7-19.73-47.84 0-28.15 19.7-47.88 19.7-19.73 47.84-19.73 28.15 0 47.88 19.7 19.73 19.7 19.73 47.84 0 28.14-19.7 47.88-19.7 19.73-47.84 19.73ZM242.23-729.19l101.39 212.31h268.65q3.46 0 6.15-1.74 2.7-1.73 4.62-4.8l107.31-195q2.3-4.23.38-7.5-1.92-3.27-6.54-3.27H242.23Zm-27.05-55.96h544.47q24.35 0 36.52 20.41 12.17 20.42.98 41.51l-124.92 226.5q-9.04 16.81-25.1 26.31-16.06 9.5-34.52 9.5H325.62l-47.12 86.23q-3.08 4.61-.19 10 2.88 5.38 8.65 5.38h450.42v55.96H289.53q-39.07 0-58.67-33.07-19.59-33.07-1.4-66.27l57.08-101.63-143.83-303.26H68.08v-55.96h109.8l37.3 78.39Zm128.44 268.27h275.96-275.96Z" />
-                    </svg>
+                    <Link to="/login" className="hover:text-green-600">Mi cuenta</Link>
+                    <span><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M286.15-97.69q-29.15 0-49.57-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.57-20.42 29.16 0 49.58 20.42 20.42 20.42 20.42 49.58 0 29.15-20.42 49.57-20.42 20.43-49.58 20.43Zm387.7 0q-29.16 0-49.58-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.58-20.42 29.15 0 49.57 20.42t20.42 49.58q0 29.15-20.42 49.57Q703-97.69 673.85-97.69ZM240.61-730 342-517.69h272.69q3.46 0 6.16-1.73 2.69-1.73 4.61-4.81l107.31-195q2.31-4.23.38-7.5-1.92-3.27-6.54-3.27h-486Zm-28.76-60h555.38q24.54 0 37.11 20.89 12.58 20.88 1.2 42.65L677.38-494.31q-9.84 17.31-26.03 26.96-16.2 9.66-35.5 9.66H324l-46.31 84.61q-3.08 4.62-.19 10 2.88 5.39 8.65 5.39h457.69v60H286.15q-40 0-60.11-34.5-20.12-34.5-1.42-68.89l57.07-102.61L136.16-810H60v-60h113.85l38 80ZM342-517.69h280-280Z" /></svg></span>
                 </div>
             </div>
+
             {activeSubmenu && (
-                <div className="sub-header flex flex-col p-5 px-10 bg-white z-40" onMouseLeave={() => setActiveSubmenu(null)}> {renderLeftSubmenu()} {renderRightSubmenu()}
-                </div>)}
-        </header>);
+                <div className="hidden lg:flex flex-col px-10 bg-white shadow"
+                    onMouseLeave={() => setActiveSubmenu(null)}>
+                    {renderLeftSubmenu()}
+                    {renderRightSubmenu()}
+                </div>
+            )}
+
+            <div className="flex lg:hidden justify-between items-center px-4 h-16 bg-white shadow">
+                <div className="flex gap-5 text-xl">
+                    <button onClick={() => setMenuMobileOpen(!menuMobileOpen)} className="text-2xl">
+                        {menuMobileOpen ? (
+                            <span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24px"
+                                    viewBox="0 -960 960 960"
+                                    width="24px"
+                                    fill="#1f1f1f"
+                                >
+                                    <path d="M256-213.85 213.85-256l224-224-224-224L256-746.15l224 224 224-224L746.15-704l-224 224 224 224L704-213.85l-224-224-224 224Z" />
+                                </svg>
+                            </span>
+                        ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M140-254.62v-59.99h680v59.99H140ZM140-450v-60h680v60H140Zm0-195.39v-59.99h680v59.99H140Z" /></svg>
+                        )}
+                    </button>
+
+                    <span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24px"
+                            viewBox="0 -960 960 960"
+                            width="24px"
+                            fill="#1f1f1f"
+                        >
+                            <path d="M781.69-136.92 530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14-102.55 0-173.58-71.01-71.03-71.01-71.03-173.54 0-102.52 71.01-173.6 71.01-71.07 173.54-71.07 102.52 0 173.6 71.03 71.07 71.03 71.07 173.58 0 42.85-14.38 81.85-14.39 39-38.39 67.84l251.23 251.23-42.15 42.16ZM380.77-395.38q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z" />
+                        </svg>
+                    </span>
+                </div>
+
+                <Link to="/" className="flex flex-col items-center">
+                    <img src="img/logo.png" className="w-10 h-10" />
+                </Link>
+
+                <div className="flex gap-5 text-xl">
+                    <span><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M480-492.31q-57.75 0-98.87-41.12Q340-574.56 340-632.31q0-57.75 41.13-98.87 41.12-41.13 98.87-41.13 57.75 0 98.87 41.13Q620-690.06 620-632.31q0 57.75-41.13 98.88-41.12 41.12-98.87 41.12ZM180-187.69v-88.93q0-29.38 15.96-54.42 15.96-25.04 42.66-38.5 59.3-29.07 119.65-43.61 60.35-14.54 121.73-14.54t121.73 14.54q60.35 14.54 119.65 43.61 26.7 13.46 42.66 38.5Q780-306 780-276.62v88.93H180Zm60-60h480v-28.93q0-12.15-7.04-22.5-7.04-10.34-19.11-16.88-51.7-25.46-105.42-38.58Q534.7-367.69 480-367.69q-54.7 0-108.43 13.11-53.72 13.12-105.42 38.58-12.07 6.54-19.11 16.88-7.04 10.35-7.04 22.5v28.93Zm240-304.62q33 0 56.5-23.5t23.5-56.5q0-33-23.5-56.5t-56.5-23.5q-33 0-56.5 23.5t-23.5 56.5q0 33 23.5 56.5t56.5 23.5Zm0-80Zm0 384.62Z" /></svg></span>
+                    <span><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M286.15-97.69q-29.15 0-49.57-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.57-20.42 29.16 0 49.58 20.42 20.42 20.42 20.42 49.58 0 29.15-20.42 49.57-20.42 20.43-49.58 20.43Zm387.7 0q-29.16 0-49.58-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.58-20.42 29.15 0 49.57 20.42t20.42 49.58q0 29.15-20.42 49.57Q703-97.69 673.85-97.69ZM240.61-730 342-517.69h272.69q3.46 0 6.16-1.73 2.69-1.73 4.61-4.81l107.31-195q2.31-4.23.38-7.5-1.92-3.27-6.54-3.27h-486Zm-28.76-60h555.38q24.54 0 37.11 20.89 12.58 20.88 1.2 42.65L677.38-494.31q-9.84 17.31-26.03 26.96-16.2 9.66-35.5 9.66H324l-46.31 84.61q-3.08 4.62-.19 10 2.88 5.39 8.65 5.39h457.69v60H286.15q-40 0-60.11-34.5-20.12-34.5-1.42-68.89l57.07-102.61L136.16-810H60v-60h113.85l38 80ZM342-517.69h280-280Z" /></svg></span>
+                </div>
+            </div>
+
+
+            {menuMobileOpen && (
+                <div className="lg:hidden flex flex-col bg-white p-5 gap-3 border-t shadow text-center">
+                    {leftMenuItems.concat(rightMenuItems).map((item, i) => (
+                        <button key={i} className="py-2 text-gray-800 border-b" onClick={() => setMenuMobileOpen(false)}>
+                            {item.toUpperCase()}
+                        </button>
+                    ))}
+                    <Link to="/login" className="py-2 text-gray-800 border-b">MI CUENTA</Link>
+                </div>
+            )}
+        </header>
+    );
 }
