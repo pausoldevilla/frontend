@@ -52,24 +52,24 @@ export default function Home() {
 
         <div className="flex overflow-x-auto space-x-6 pb-4">
           {categorias.map((cat, i) => (
-            <div
+            <a
               key={i}
-              className="flex-none w-64 md:w-72 lg:w-80 overflow-hidden flex flex-col transition-transform duration-200 hover:shadow-lg"
+              href={`/categoria/${cat.nombre.toLowerCase()}`}
+              className="group flex-none w-64 md:w-72 lg:w-80 overflow-hidden flex flex-col transition-transform duration-200 hover:shadow-lg cursor-pointer"
             >
               <div className="overflow-hidden bg-[#ede3ca] h-64 md:h-72 lg:h-80">
                 <img
                   src={cat.imagen}
                   alt={cat.nombre}
-                  className="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-105"
                 />
               </div>
               <div className="p-4 flex flex-col justify-between flex-1">
-                <h2 className="text-lg font-semibold mb-2">{cat.nombre}</h2>
-                <button className="mt-4 py-2 bg-[#e5c546] text-white border-none cursor-pointer transition-colors duration-200 hover:bg-[#95802d]">
-                  Ver más
-                </button>
+                <h2 className="text-lg font-semibold mb-2 transition-all duration-200 group-hover:underline">
+                  {cat.nombre}
+                </h2>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
@@ -81,29 +81,25 @@ export default function Home() {
 
         <div className="flex overflow-x-auto space-x-6 pb-4">
           {productos.map((producto) => (
-            <div
+            <a
               key={producto._id}
-              className="flex-none w-64 md:w-72 lg:w-80 overflow-hidden flex flex-col transition-transform duration-200 hover:shadow-lg"
+              href={`/producto/${producto._id}`}
+              className="group flex-none w-64 md:w-72 lg:w-80 overflow-hidden flex flex-col transition-transform duration-200 hover:shadow-lg cursor-pointer"
             >
               <div className="overflow-hidden bg-[#ede3ca] h-64 md:h-72 lg:h-80">
                 <img
                   src={producto.imatge}
                   alt={producto.nom}
-                  className="w-full h-full object-contain p-5 transition-transform duration-300 transform hover:scale-105"
+                  className="w-full h-full object-contain p-5 transition-transform duration-300 transform group-hover:scale-105"
                 />
               </div>
               <div className="p-4 flex flex-col justify-between flex-1">
-                <div>
-                  <h2 className="text-lg font-semibold mb-2">{producto.nom}</h2>
-                  <p className="text-base font-bold text-black">
-                    {producto.preu} €
-                  </p>
-                </div>
-                <button className="mt-4 py-2 bg-[#e5c546] text-white border-none cursor-pointer transition-colors duration-200 hover:bg-[#95802d]">
-                  Comprar
-                </button>
+                <h2 className="text-lg font-semibold mb-2 transition-all duration-200 group-hover:underline">
+                  {producto.nom}
+                </h2>
+                <p className="text-base font-bold text-black">{producto.preu} €</p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>

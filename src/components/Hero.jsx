@@ -11,9 +11,7 @@ export default function Hero() {
       }}
     >
       <div className="hero-content relative z-10 max-w-screen-md pt-24 lg:pt-40 space-y-4 bg-black/90 p-4">
-        <h2 className="text-5xl font-bold">
-          Bienvenido
-        </h2>
+        <h2 className="text-5xl font-bold">Bienvenido</h2>
 
         <p className="text-xl">
           Descubre las mejores plantas para tu hogar y jardín
@@ -21,7 +19,7 @@ export default function Hero() {
 
         <a
           href="#categories"
-          className="font-bold border-b border-white hover:text-red-900 transition-colors"
+          className="font-bold hover:underline transition-all"
         >
           Explorar Categorías
         </a>
