@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Outlet, Link } from 'react-router-dom';
-import NavBar from "./components/NavBar";
-import Hero from "./components/Hero";
-import Footer from "./components/Footer";
+// MainLayout.jsx
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-export default function App() {
+export default function MainLayout() {
   return (
     <>
-      <NavBar />
-      <Hero />
       <main>
         <Outlet />
       </main>
-      <Footer />
     </>
   );
 }

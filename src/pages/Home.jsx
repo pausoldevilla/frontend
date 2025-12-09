@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-
+import Hero from "../components/Hero.jsx";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 export default function Home() {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -45,17 +47,19 @@ export default function Home() {
 
   return (
     <>
+      <NavBar />
+      <Hero />
       <div className="p-6 max-w-[1200px] mx-auto">
         <h1 className="text-center text-2xl md:text-3xl font-bold mb-8 md:mb-12">
           Categorías
         </h1>
 
-        <div className="flex overflow-x-auto space-x-6 pb-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {categorias.map((cat, i) => (
             <a
               key={i}
               href={`/categoria/${cat.nombre.toLowerCase()}`}
-              className="group flex-none w-64 md:w-72 lg:w-80 overflow-hidden flex flex-col transition-transform duration-200 hover:shadow-lg cursor-pointer"
+              className="group w-full flex flex-col overflow-hidden transition-transform duration-200 hover:shadow-lg cursor-pointer"
             >
               <div className="overflow-hidden bg-[#ede3ca] h-64 md:h-72 lg:h-80">
                 <img
@@ -79,12 +83,12 @@ export default function Home() {
           Productos Destacados
         </h1>
 
-        <div className="flex overflow-x-auto space-x-6 pb-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {productos.map((producto) => (
             <a
               key={producto._id}
               href={`/producto/${producto._id}`}
-              className="group flex-none w-64 md:w-72 lg:w-80 overflow-hidden flex flex-col transition-transform duration-200 hover:shadow-lg cursor-pointer"
+              className="group w-full flex flex-col overflow-hidden transition-transform duration-200 hover:shadow-lg cursor-pointer"
             >
               <div className="overflow-hidden bg-[#ede3ca] h-64 md:h-72 lg:h-80">
                 <img
@@ -103,6 +107,7 @@ export default function Home() {
           ))}
         </div>
       </div>
+      <Footer />
     </>
   );
 }
