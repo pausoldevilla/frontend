@@ -19,7 +19,7 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Contacto</h3>
           <ul className="flex flex-col gap-2 text-gray-900">
-            <li>Email: info@soldevilla.com</li>
+            <li>Email: info.soldevilla@gmail.com</li>
             <li>Teléfono: +34 900 123 456</li>
             <li>Dirección: Carrer de Girona 208, Sabadell</li>
           </ul>

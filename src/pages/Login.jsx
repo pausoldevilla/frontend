@@ -52,7 +52,15 @@ export default function Login() {
  };
 
  return (
-  <div className="flex justify-center items-center min-h-screen bg-gray-50">
+  <div className="flex justify-center items-center min-h-screen bg-gray-50"
+          style={{
+          backgroundImage: "url('/img/bg-form.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          minHeight: "100vh",
+        }}>
    <div className="w-full max-w-md p-8 md:p-10 relative">
 
     <div className="logo font-serif font-bold text-3xl tracking-wider flex flex-col items-center justify-center mb-8">
@@ -70,7 +78,7 @@ export default function Login() {
     </p>
 
     {error && (
-      <p className="text-red-500 text-sm mb-4 bg-red-100 p-3 rounded-md border border-red-300">
+      <p className="text-red-500 text-sm mb-4 bg-red-100 p-3 border border-red-300">
         {error}
       </p>
     )}
@@ -92,7 +100,7 @@ export default function Login() {
        autoComplete="email"
        value={email} 
        onChange={(e) => setEmail(e.target.value)}
-       className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
+       className="w-full px-4 py-2 border border-gray-300"
        placeholder="tu@correo.com"
       />
      </div>
@@ -112,7 +120,7 @@ export default function Login() {
        autoComplete="current-password"
        value={contrasenya} 
        onChange={(e) => setContrasenya(e.target.value)}
-       className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
+       className="w-full px-4 py-2 border border-gray-300"
        placeholder="••••••••"
       />
       </div>
@@ -120,7 +128,7 @@ export default function Login() {
      <div>
       <button
        type="submit"
-       className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-semibold text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150"
+       className="w-full flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-semibold text-white bg-gray-900 hover:bg-black transition duration-150"
       >
        Entrar
       </button>

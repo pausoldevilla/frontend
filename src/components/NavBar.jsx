@@ -81,7 +81,7 @@ export default function NavBar() {
         switch (activeSubmenu) {
             case "jardines": return submenu(["Carrer Girona 208, Sabadell"]);
             case "acerca": return submenu(["Historia", "Misión", "Equipo"]);
-            case "contacto": return submenu(["Email", "Teléfono", "Ubicación"]);
+            case "contacto": // El enlace de contacto ya no tiene submenú, pero lo dejamos aquí para evitar errores
             default: return null;
         }
     };
@@ -89,6 +89,7 @@ export default function NavBar() {
     return (
         <header className="fixed top-0 left-0 w-full border-b border-gray-200 z-50 bg-white">
 
+            {/* Menú de Escritorio (Desktop) */}
             <div className="hidden lg:flex justify-center items-center p-3 relative bg-white shadow">
 
                 <div className="absolute left-10 flex gap-6 items-center">
@@ -115,19 +116,35 @@ export default function NavBar() {
 
                 <div className="logo font-serif font-bold text-lg tracking-wider flex flex-col items-center justify-center">
                     <Link to="/" className="flex flex-col items-center text-black no-underline">
-                        <img src="img/logo.png" className="w-12 h-12" />
+                        <img src="img/logo.png" className="w-12 h-12" alt="Logo Soldevilla" />
                         soldevilla
                     </Link>
                 </div>
 
                 <div className="absolute right-10 flex gap-6 items-center">
-                    {rightMenuItems.map((item) => (
-                        <div key={item} onMouseEnter={() => setActiveSubmenu(item)}>
-                            <a href="#" className="text-gray-800 hover:text-red-900">
-                                {item.charAt(0).toUpperCase() + item.slice(1)}
-                            </a>
-                        </div>
-                    ))}
+                    {rightMenuItems.map((item) => {
+                        if (item === "contacto") {
+                            return (
+                                <div key={item}>
+                                    <Link 
+                                        to="/contact" 
+                                        className="text-gray-800 hover:text-red-900"
+                                        onMouseEnter={() => setActiveSubmenu(null)} 
+                                    >
+                                        Contacto
+                                    </Link>
+                                </div>
+                            );
+                        }
+                        
+                        return (
+                            <div key={item} onMouseEnter={() => setActiveSubmenu(item)}>
+                                <a href="#" className="text-gray-800 hover:text-red-900">
+                                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                                </a>
+                            </div>
+                        );
+                    })}
                     <Link to={accountRoute} className="hover:text-red-900">Mi cuenta</Link>
                     <span><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M286.15-97.69q-29.15 0-49.57-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.57-20.42 29.16 0 49.58 20.42 20.42 20.42 20.42 49.58 0 29.15-20.42 49.57-20.42 20.43-49.58 20.43Zm387.7 0q-29.16 0-49.58-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.58-20.42 29.15 0 49.57 20.42t20.42 49.58q0 29.15-20.42 49.57Q703-97.69 673.85-97.69ZM240.61-730 342-517.69h272.69q3.46 0 6.16-1.73 2.69-1.73 4.61-4.81l107.31-195q2.31-4.23.38-7.5-1.92-3.27-6.54-3.27h-486Zm-28.76-60h555.38q24.54 0 37.11 20.89 12.58 20.88 1.2 42.65L677.38-494.31q-9.84 17.31-26.03 26.96-16.2 9.66-35.5 9.66H324l-46.31 84.61q-3.08 4.62-.19 10 2.88 5.39 8.65 5.39h457.69v60H286.15q-40 0-60.11-34.5-20.12-34.5-1.42-68.89l57.07-102.61L136.16-810H60v-60h113.85l38 80ZM342-517.69h280-280Z" /></svg></span>
                 </div>
@@ -141,6 +158,7 @@ export default function NavBar() {
                 </div>
             )}
 
+            {/* Menú Móvil (Mobile) */}
             <div className="flex lg:hidden justify-between items-center px-4 h-16 bg-white shadow">
                 <div className="flex gap-5 text-xl">
                     <button onClick={() => setMenuMobileOpen(!menuMobileOpen)} className="text-2xl">
@@ -175,7 +193,7 @@ export default function NavBar() {
                 </div>
 
                 <Link to="/" className="flex flex-col items-center">
-                    <img src="img/logo.png" className="w-10 h-10" />
+                    <img src="img/logo.png" className="w-10 h-10" alt="Logo Soldevilla" />
                 </Link>
 
                 <div className="flex gap-5 text-xl">
@@ -187,12 +205,29 @@ export default function NavBar() {
 
             {menuMobileOpen && (
                 <div className="lg:hidden flex flex-col bg-white p-5 gap-3 border-t shadow text-center">
-                    {leftMenuItems.concat(rightMenuItems).map((item, i) => (
-                        <button key={i} className="py-2 text-gray-800 border-b" onClick={() => setMenuMobileOpen(false)}>
-                            {item.toUpperCase()}
-                        </button>
-                    ))}
-                    {/* Aquesta és la línia clau on utilitzem la ruta dinàmica per a mòbil */}
+                    {/* Filtramos "contacto" para renderizarlo con Link por separado */}
+                    {leftMenuItems.concat(rightMenuItems)
+                        .filter(item => item !== 'contacto')
+                        .map((item, i) => (
+                            <button 
+                                key={i} 
+                                className="py-2 text-gray-800 border-b" 
+                                onClick={() => setMenuMobileOpen(false)}
+                            >
+                                {item.toUpperCase()}
+                            </button>
+                        ))}
+                    
+                    {/* Enlace de CONTACTO para móvil */}
+                    <Link 
+                        to="/contacto" 
+                        className="py-2 text-gray-800 border-b hover:text-red-900" 
+                        onClick={() => setMenuMobileOpen(false)}
+                    >
+                        CONTACTO
+                    </Link>
+
+                    {/* Línea original de cuenta */}
                     <Link to={accountRoute} className="py-2 text-gray-800 border-b" onClick={() => setMenuMobileOpen(false)}>MI CUENTA</Link>
                 </div>
             )}
