@@ -106,7 +106,7 @@ export default function Register() {
 
                     <div className="flex space-x-4">
                         <div className="w-1/4">
-                            <label htmlFor="titol" className="block text-sm font-medium text-gray-700 mb-2">Títol</label>
+                            <label htmlFor="titol" className="block text-sm font-medium text-gray-700 mb-2">Titulo</label>
                             <select
                                 id="titol"
                                 name="titol"
@@ -121,7 +121,7 @@ export default function Register() {
                         </div>
 
                         <div className="w-3/4">
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Nom Complet</label>
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
                             <input
                                 id="name"
                                 name="name"
@@ -141,7 +141,7 @@ export default function Register() {
                             htmlFor="email"
                             className="block text-sm font-medium text-gray-700 mb-2"
                         >
-                            Correu Electrònic
+                            Correo Electrónico
                         </label>
                         <input
                             id="email"
@@ -157,13 +157,12 @@ export default function Register() {
                     </div>
 
                     <div className="flex space-x-4">
-                        {/* 🆕 Camp de Prefix Telefònic (Select) */}
                         <div className="w-1/4">
                             <label
                                 htmlFor="prefix-telefon"
                                 className="block text-sm font-medium text-gray-700 mb-2"
                             >
-                                Prefix
+                                Prefijo
                             </label>
                             <select
                                 id="prefix-telefon"
@@ -205,7 +204,7 @@ export default function Register() {
                             htmlFor="dataNaixement"
                             className="block text-sm font-medium text-gray-700 mb-2"
                         >
-                            Naix.
+                            Fecha de Nacimiento
                         </label>
                         <input
                             id="dataNaixement"
@@ -217,11 +216,11 @@ export default function Register() {
                     </div>
 
 
-                    <p className="text-xl font-semibold text-gray-800 pt-4 border-t mt-6">Adreça</p>
+                    <p className="text-xl font-semibold text-gray-800 pt-4 border-t mt-6">Dirección</p>
 
 
                     <div>
-                        <label htmlFor="carrer" className="block text-sm font-medium text-gray-700 mb-2">Carrer i Número</label>
+                        <label htmlFor="carrer" className="block text-sm font-medium text-gray-700 mb-2">Calle y Número </label>
                         <input
                             id="carrer"
                             name="carrer"
@@ -230,13 +229,13 @@ export default function Register() {
                             value={carrer}
                             onChange={(e) => setCarrer(e.target.value)}
                             className="w-full px-4 py-2 border border-gray-300 "
-                            placeholder="Ex: Carrer Gran, 15, 3r 2a"
+                            placeholder="Ex: Calle Gran, 15, 3r 2a"
                         />
                     </div>
 
                     <div className="flex space-x-4">
                         <div className="w-2/3">
-                            <label htmlFor="ciutat" className="block text-sm font-medium text-gray-700 mb-2">Ciutat</label>
+                            <label htmlFor="ciutat" className="block text-sm font-medium text-gray-700 mb-2">Ciudad</label>
                             <input
                                 id="ciutat"
                                 name="ciutat"
@@ -250,7 +249,7 @@ export default function Register() {
                         </div>
 
                         <div className="w-1/3">
-                            <label htmlFor="codiPostal" className="block text-sm font-medium text-gray-700 mb-2">Codi Postal</label>
+                            <label htmlFor="codiPostal" className="block text-sm font-medium text-gray-700 mb-2">Codigo Postal</label>
                             <input
                                 id="codiPostal"
                                 name="codiPostal"
@@ -280,7 +279,7 @@ export default function Register() {
                         </select>
                     </div>
 
-                    <p className="text-xl font-semibold text-gray-800 pt-4 border-t mt-6">Contrasenya</p>
+                    <p className="text-xl font-semibold text-gray-800 pt-4 border-t mt-6">Contraseña</p>
 
                     <div>
                         <label htmlFor="contrasenya" className="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
