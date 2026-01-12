@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 border-t border-gray-300 mt-10">
+    <footer className="bg-gray-100 border-t border-gray-300">
       <div className="container mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-        
+
         <div>
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Enlaces</h3>
           <ul className="flex flex-col gap-2 text-gray-900">

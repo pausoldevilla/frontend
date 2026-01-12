@@ -87,6 +87,12 @@ export default function Register() {
             }}>
 
             <div className="w-full max-w-md p-8 md:p-10 relative">
+                <button
+                    onClick={() => navigate("/")}
+                    className="absolute top-0 left-8 md:left-10 text-gray-400 hover:text-black flex items-center gap-2 uppercase text-[10px] tracking-[0.3em] font-medium transition-colors"
+                >
+                    ← Inicio
+                </button>
 
                 <div className="logo font-serif font-bold text-3xl tracking-wider flex flex-col items-center justify-center mb-8">
                     <Link to="/" className="flex flex-col items-center text-black no-underline">
@@ -94,7 +100,7 @@ export default function Register() {
                         soldevilla
                     </Link>
                 </div>
-                <p className="text-2xl text-gray-800 mt-4 mb-2 text-left">Únete a nuestra comunidad</p>
+                <p className="text-3xl font-medium tracking-tight text-gray-800 mt-4 mb-2 text-left">Únete a nuestra comunidad</p>
                 <p className="text-lg text-gray-600 mt-4 mb-2 text-left">Crea tu cuenta para acceder a todas las funcionalidades.</p>
                 {error && (
                     <p className="text-red-500 text-sm mb-4 bg-red-100 p-3 border border-red-300">

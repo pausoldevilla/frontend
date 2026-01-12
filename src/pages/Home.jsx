@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Hero from "../components/Hero.jsx";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -49,61 +50,63 @@ export default function Home() {
     <>
       <NavBar />
       <Hero />
-      <div className="p-6 max-w-[1200px] mx-auto">
-        <h1 className="text-center text-2xl md:text-3xl font-bold mb-8 md:mb-12">
+      <div id="categories" className="pt-16 pb-12 px-6 max-w-[1400px] mx-auto">
+        <h1 className="text-left text-xl md:text-2xl font-medium mb-16 uppercase tracking-widest pl-2">
           Categorías
         </h1>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {categorias.map((cat, i) => (
-            <a
+            <Link
               key={i}
-              href={`/categoria/${cat.nombre.toLowerCase()}`}
-              className="group w-full flex flex-col overflow-hidden transition-transform duration-200 hover:shadow-lg cursor-pointer"
+              to={`/categoria/${cat.nombre.toLowerCase()}`}
+              className="group w-full flex flex-col cursor-pointer text-black no-underline"
             >
-              <div className="overflow-hidden bg-[#ede3ca] h-64 md:h-72 lg:h-80">
+              <div className="overflow-hidden bg-[#ede3ca] mb-4 relative aspect-[3/4]">
                 <img
                   src={cat.imagen}
                   alt={cat.nombre}
-                  className="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out transform group-hover:scale-110"
                 />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
               </div>
-              <div className="p-4 flex flex-col justify-between flex-1">
-                <h2 className="text-lg font-semibold mb-2 transition-all duration-200 group-hover:underline">
+              <div className="text-left pl-2">
+                <h2 className="text-sm uppercase tracking-[0.2em] font-medium hover:underline transition-colors decoration-gray-900 underline-offset-4">
                   {cat.nombre}
                 </h2>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
 
-      <div className="p-6 max-w-[1200px] mx-auto mt-12">
-        <h1 className="text-center text-2xl md:text-3xl font-bold mb-8 md:mb-12">
+      <div className="pt-0 pb-24 px-6 max-w-[1400px] mx-auto">
+        <h1 className="text-left text-xl md:text-2xl font-medium mb-16 uppercase tracking-widest pl-2">
           Productos Destacados
         </h1>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
           {productos.map((producto) => (
-            <a
+            <Link
               key={producto._id}
-              href={`/producto/${producto._id}`}
-              className="group w-full flex flex-col overflow-hidden transition-transform duration-200 hover:shadow-lg cursor-pointer"
+              to={`/producto/${producto._id}`}
+              className="group w-full flex flex-col cursor-pointer text-black no-underline"
             >
-              <div className="overflow-hidden bg-[#ede3ca] h-64 md:h-72 lg:h-80">
+              <div className="relative overflow-hidden bg-[#ede3ca] aspect-[3/4] mb-6">
                 <img
                   src={producto.imatge}
                   alt={producto.nom}
-                  className="w-full h-full object-contain p-5 transition-transform duration-300 transform group-hover:scale-105"
+                  className="w-full h-full object-contain p-8 transition-transform duration-700 ease-out transform group-hover:scale-105 mix-blend-multiply"
                 />
               </div>
-              <div className="p-4 flex flex-col justify-between flex-1">
-                <h2 className="text-lg font-semibold mb-2 transition-all duration-200 group-hover:underline">
+              <div className="flex flex-col items-start text-left gap-2 pl-2">
+                <p className="text-xs text-gray-400 uppercase tracking-widest">{producto.categoria}</p>
+                <h2 className="text-lg font-medium tracking-wide hover:underline transition-colors decoration-gray-900 underline-offset-4">
                   {producto.nom}
                 </h2>
-                <p className="text-base font-bold text-black">{producto.preu} €</p>
+                <p className="text-base font-light text-gray-900 mt-1">{producto.preu} €</p>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

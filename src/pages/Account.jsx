@@ -115,69 +115,79 @@ export default function Account() {
     }
 
     return (
-        
+
         <div>
-        <NavBar />
-        {/* MODIFICACIÓN: Añado la clase "pt-16" al contenedor principal para evitar que se esconda detrás del NavBar. */}
-        <div className="flex justify-center pt-24 pb-12 lg:pt-40">
-            {/* MODIFICACIÓN: Quité el 'mt-10' de aquí, ya que el 'pt-16' ahora maneja el espacio superior. Dejo 'mb-10'. */}
-            <div className="w-full max-w-md"> 
+            <NavBar />
+            {/* MODIFICACIÓN: Añado la clase "pt-16" al contenedor principal para evitar que se esconda detrás del NavBar. */}
+            <div className="flex justify-center pt-24 pb-12 lg:pt-40">
+                {/* MODIFICACIÓN: Quité el 'mt-10' de aquí, ya que el 'pt-16' ahora maneja el espacio superior. Dejo 'mb-10'. */}
+                <div className="w-full max-w-md">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="mb-8 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors"
+                    >
+                        ← Volver
+                    </button>
 
-                <h2 className="text-xl font-semibold text-gray-700 mb-2">Información de la Cuenta</h2>
-                <div className="shadow-md p-4 mb-6 space-y-3 bg-white bg-opacity-80">
-                    <div className="flex flex-col">
-                        <span className="text-gray-500 font-medium">Nombre:</span>
-                        <span>{userData.titol} {userData.name}</span>
+                    <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-12 text-gray-900">
+                        Mi Cuenta
+                    </h1>
+
+                    <h2 className="text-xl font-medium tracking-tight text-gray-700 mb-4">Información de la Cuenta</h2>
+                    <div className="shadow-md p-4 mb-6 space-y-3 bg-white bg-opacity-80">
+                        <div className="flex flex-col">
+                            <span className="text-gray-500 font-medium">Nombre:</span>
+                            <span>{userData.titol} {userData.name}</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-gray-500 font-medium">Email:</span>
+                            <span>{userData.email}</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-gray-500 font-medium">Teléfono:</span>
+                            <span>{userData.telefon}</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-gray-500 font-medium">Fecha de Nacimiento:</span>
+                            <span>{userData.dataNaixement}</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-gray-500 font-medium">Miembro desde:</span>
+                            <span>{userData.memberSince}</span>
+                        </div>
                     </div>
-                    <div className="flex flex-col">
-                        <span className="text-gray-500 font-medium">Email:</span>
-                        <span>{userData.email}</span>
+
+                    <h2 className="text-xl font-semibold text-gray-700 mb-2">Dirección de Facturación</h2>
+                    <div className="shadow-md p-4 mb-6 space-y-3 bg-white bg-opacity-80">
+                        <div className="flex flex-col">
+                            <span className="text-gray-500 font-medium">Calle:</span>
+                            <span>{userData.adreca.carrer}</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-gray-500 font-medium">Ciudad:</span>
+                            <span>{userData.adreca.ciutat}</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-gray-500 font-medium">Código Postal:</span>
+                            <span>{userData.adreca.codiPostal}</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-gray-500 font-medium">País:</span>
+                            <span>{userData.adreca.pais}</span>
+                        </div>
                     </div>
-                    <div className="flex flex-col">
-                        <span className="text-gray-500 font-medium">Teléfono:</span>
-                        <span>{userData.telefon}</span>
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-gray-500 font-medium">Fecha de Nacimiento:</span>
-                        <span>{userData.dataNaixement}</span>
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-gray-500 font-medium">Miembro desde:</span>
-                        <span>{userData.memberSince}</span>
-                    </div>
+
+                    <button
+                        onClick={handleLogout}
+                        className="w-full flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-semibold text-white bg-gray-900 hover:bg-black transition duration-150"
+                    >
+                        Cerrar Sesión
+                    </button>
+
                 </div>
-
-                <h2 className="text-xl font-semibold text-gray-700 mb-2">Dirección de Facturación</h2>
-                <div className="shadow-md p-4 mb-6 space-y-3 bg-white bg-opacity-80">
-                    <div className="flex flex-col">
-                        <span className="text-gray-500 font-medium">Calle:</span>
-                        <span>{userData.adreca.carrer}</span>
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-gray-500 font-medium">Ciudad:</span>
-                        <span>{userData.adreca.ciutat}</span>
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-gray-500 font-medium">Código Postal:</span>
-                        <span>{userData.adreca.codiPostal}</span>
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-gray-500 font-medium">País:</span>
-                        <span>{userData.adreca.pais}</span>
-                    </div>
-                </div>
-
-                <button
-                    onClick={handleLogout}
-                    className="w-full flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-semibold text-white bg-gray-900 hover:bg-black transition duration-150"
-                >
-                    Cerrar Sesión
-                </button>
-
             </div>
+            <Footer />
         </div>
-        <Footer />
-        </div>
-        
+
     );
 }
