@@ -6,7 +6,7 @@ import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import Account from './pages/Account.jsx';
-import Contact from './pages/Contact.jsx';
+import Contact from './pages/Contacto.jsx';
 import './index.css';
 
 import { CartProvider } from './pages/CartContext.jsx';
@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="account" element={<Account />} />
-            <Route path="contact" element={<Contact />} />
+            <Route path="contacto" element={<Contact />} />
             <Route path="acerca" element={<About />} />
             <Route path="jardines" element={<Jardines />} />
             <Route path="producto/:id" element={<ProductDetail />} />

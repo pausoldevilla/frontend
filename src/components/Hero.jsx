@@ -5,7 +5,7 @@ export default function Hero() {
     <section
       className="hero relative w-full h-screen flex items-start px-16 text-white"
       style={{
-        backgroundImage: "url('/img/jardi.png')",
+        backgroundImage: "url('/img/hero.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

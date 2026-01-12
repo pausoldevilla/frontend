@@ -46,7 +46,7 @@ export default function About() {
                             Nuestra labor transforma casas en hogares y espacios de trabajo en refugios.
                         </p>
                         <Link
-                            to="/contact"
+                            to="/contacto"
                             className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] font-medium group hover:underline underline-offset-8 decoration-gray-400 transition-all duration-300"
                         >
                             <span>Contacta con nosotros</span>

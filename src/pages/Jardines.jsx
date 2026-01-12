@@ -36,7 +36,7 @@ export default function Jardines() {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center mb-32">
                     <div className="md:col-span-8 overflow-hidden bg-gray-50 aspect-[16/9] relative group">
                         <img
-                            src="/img/jardi.png"
+                            src="/img/jardin.jpg"
                             alt="Diseño de Jardines"
                             className="w-full h-full object-cover"
                         />
@@ -65,7 +65,7 @@ export default function Jardines() {
                         <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-4">Responsabilidad</h3>
                         <p className="font-light text-sm text-gray-600">
                             <Link
-                                to="/contact"
+                                to="/contacto"
                                 className="mb-8 text-gray-600 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] text-sm transition-colors"
                             >
                                 Solicitar consultoría <span>→</span>
