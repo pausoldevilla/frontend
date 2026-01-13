@@ -38,9 +38,20 @@ export default function CategoryPage() {
                 >
                     ← Inicio
                 </button>
-                <h1 className="text-left text-3xl md:text-4xl font-medium tracking-tight mb-16 pl-2">
+                <h1 className="text-left text-3xl md:text-4xl font-medium tracking-tight mb-6 pl-2">
                     {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
                 </h1>
+
+                <div className="mb-16 pl-2 max-w-2xl">
+                    <p className="text-lg text-gray-600 leading-relaxed font-light">
+                        {{
+                            interior: "Transforma tus espacios interiores en oasis de tranquilidad con nuestra selección de plantas de interior. Perfectas para purificar el aire y añadir un toque de vida a cualquier rincón de tu hogar, estas plantas se adaptan a diversas condiciones de luz y estilo.",
+                            exterior: "Embellece tu jardín, terraza o balcón con nuestra colección de exterior. Desde arbustos resistentes hasta flores vibrantes que desafían las estaciones, encuentra todo lo que necesitas para crear tu propio paraíso al aire libre.",
+                            suculentas: "Descubre la belleza resistente y de bajo mantenimiento. Nuestras suculentas son ideales para quienes buscan añadir verde sin complicaciones, ofreciendo formas geométricas únicas y colores fascinantes que decoran por sí mismos.",
+                            florales: "Llena tu vida de color y aroma. Nuestra colección de plantas florales está cuidadosamente seleccionada para traer alegría y frescura, convirtiendo cualquier espacio en un espectáculo visual vibrante."
+                        }[categoryName.toLowerCase()] || "Explora nuestra selección de productos de alta calidad, elegidos pensando en ti."}
+                    </p>
+                </div>
 
                 {loading ? (
                     <p className="text-center text-lg">Cargando productos...</p>

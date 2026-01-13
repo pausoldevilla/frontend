@@ -76,7 +76,7 @@ export default function Register() {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-50"
+        <div className="flex justify-center items-start pt-20 pb-12 min-h-screen bg-gray-50"
             style={{
                 backgroundImage: "url('/img/bg-form.png')",
                 backgroundSize: "cover",

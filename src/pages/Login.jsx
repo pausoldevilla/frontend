@@ -52,7 +52,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50"
+    <div className="flex justify-center items-start pt-20 min-h-screen bg-gray-50"
       style={{
         backgroundImage: "url('/img/bg-form.png')",
         backgroundSize: "cover",

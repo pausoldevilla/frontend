@@ -16,13 +16,6 @@ export default function Hero() {
         <p className="text-xl">
           Descubre las mejores plantas para tu hogar y jardín
         </p>
-
-        <a
-          href="#categories"
-          className="font-bold hover:underline transition-all"
-        >
-          Explorar Categorías
-        </a>
       </div>
     </section>
   );

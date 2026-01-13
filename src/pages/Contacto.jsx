@@ -87,6 +87,11 @@ export default function Contacto() {
                   <span className="text-sm font-medium text-gray-700 mb-1">Dirección</span>
                   <span>Carrer de Girona 208, Sabadell</span>
                 </li>
+                <li className="flex flex-col">
+                  <span className="text-sm font-medium text-gray-700 mb-1">Horario</span>
+                  <span>Lunes - Viernes: 10:00 - 20:00</span>
+                  <span>Sábado: 11:00 - 15:00</span>
+                </li>
               </ul>
             </div>
           </div>
@@ -171,6 +176,21 @@ export default function Contacto() {
           </div>
 
         </div>
+      </div>
+
+      {/* Map Section */}
+      {/* Map Section */}
+      <div className="max-w-6xl mx-auto mb-12 h-[400px] bg-gray-200">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2985.636603248881!2d2.1074853!3d41.5454486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a494e330555555%3A0x1234567890abcdef!2sCarrer%20de%20Girona%2C%20208%2C%2008203%20Sabadell%2C%20Barcelona!5e0!3m2!1ses!2ses!4v1600000000000!5m2!1ses!2ses"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen=""
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Google Map"
+        ></iframe>
       </div>
       <Footer />
     </>
