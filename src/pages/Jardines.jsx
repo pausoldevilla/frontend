@@ -62,28 +62,28 @@ export default function Jardines() {
 
                 <div className="mt-40 grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
                     <div className="md:col-span-4">
-                        <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-4">Responsabilidad</h3>
+                        <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-4">Consultoría</h3>
+                        <p className="font-light text-sm text-gray-600 mb-4">
+                            Transformamos tu visión en realidad. Contáctanos para evaluar tu espacio.
+                        </p>
+                        <Link
+                            to="/contacto"
+                            className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] font-medium group decoration-gray-400 transition-all duration-300"
+                        >
+                            <span>Solicitar propuesta</span>
+                            <span className="text-sm">→</span>
+                        </Link>
+                    </div>
+                    <div className="md:col-span-4">
+                        <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-4">Mantenimiento Integral</h3>
                         <p className="font-light text-sm text-gray-600">
-                            <Link
-                                to="/contacto"
-                                className="mb-8 text-gray-600 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] text-sm transition-colors"
-                            >
-                                Solicitar consultoría <span>→</span>
-                            </Link>
+                            Ofrecemos planes de cuidado personalizados para asegurar que tu jardín prospere en cada estación del año, adaptándonos a las necesidades específicas de cada planta.
                         </p>
                     </div>
                     <div className="md:col-span-4">
-                        <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-4">Sostenibilidad</h3>
+                        <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-4">Paisajismo Sostenible</h3>
                         <p className="font-light text-sm text-gray-600">
-                            Cuidamos cada detalle del proceso, desde la selección en origen hasta
-                            el envase final, minimizando nuestro impacto ambiental.
-                        </p>
-                    </div>
-                    <div className="md:col-span-4">
-                        <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-4">Curaduría</h3>
-                        <p className="font-light text-sm text-gray-600">
-                            Cada planta es seleccionada individualmente por su salud, estética
-                            y capacidad de adaptación a los hogares modernos.
+                            Diseñamos ecosistemas autosuficientes que requieren mínimo consumo hídrico y favorecen la biodiversidad local, integrando la naturaleza en tu arquitectura.
                         </p>
                     </div>
                 </div>
