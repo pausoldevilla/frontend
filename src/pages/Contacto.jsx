@@ -74,25 +74,25 @@ export default function Contacto() {
               </p>
 
               <h3 className="font-semibold text-xl mb-4 text-gray-900">Información de Contacto</h3>
-              <ul className="space-y-4 text-gray-700">
-                <li className="flex flex-col">
-                  <span className="text-sm font-medium text-gray-700 mb-1">Email</span>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-gray-700">
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium text-gray-900 mb-1 font-bold">Email</span>
                   <span>info.soldevilla@gmail.com</span>
-                </li>
-                <li className="flex flex-col">
-                  <span className="text-sm font-medium text-gray-700 mb-1">Teléfono</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium text-gray-900 mb-1 font-bold">Teléfono</span>
                   <span>+34 900 123 456</span>
-                </li>
-                <li className="flex flex-col">
-                  <span className="text-sm font-medium text-gray-700 mb-1">Dirección</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium text-gray-900 mb-1 font-bold">Dirección</span>
                   <span>Carrer de Girona 208, Sabadell</span>
-                </li>
-                <li className="flex flex-col">
-                  <span className="text-sm font-medium text-gray-700 mb-1">Horario</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium text-gray-900 mb-1 font-bold">Horario</span>
                   <span>Lunes - Viernes: 10:00 - 20:00</span>
                   <span>Sábado: 11:00 - 15:00</span>
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
           </div>
 

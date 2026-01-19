@@ -78,28 +78,29 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+        <div className="flex overflow-x-auto gap-8 pb-12 no-scrollbar snap-x cursor-grab active:cursor-grabbing px-2">
           {productos.map((producto) => (
-            <Link
-              key={producto._id}
-              to={`/producto/${producto._id}`}
-              className="group w-full flex flex-col cursor-pointer text-black no-underline"
-            >
-              <div className="relative overflow-hidden bg-[#ede3ca] aspect-[3/4] mb-6">
-                <img
-                  src={producto.imatge}
-                  alt={producto.nom}
-                  className="w-full h-full object-contain p-8 mix-blend-multiply"
-                />
-              </div>
-              <div className="flex flex-col items-start text-left gap-2 pl-2">
-                <p className="text-xs text-gray-400 uppercase tracking-widest">{producto.categoria}</p>
-                <h2 className="text-lg font-medium tracking-wide decoration-gray-900 underline-offset-4">
-                  {producto.nom}
-                </h2>
-                <p className="text-base font-light text-gray-900 mt-1">{producto.preu} €</p>
-              </div>
-            </Link>
+            <div key={producto._id} className="flex-shrink-0 w-[75%] sm:w-[45%] lg:w-[23%] snap-start">
+              <Link
+                to={`/producto/${producto._id}`}
+                className="group w-full flex flex-col cursor-pointer text-black no-underline"
+              >
+                <div className="relative overflow-hidden bg-[#ede3ca] aspect-[3/4] mb-6">
+                  <img
+                    src={producto.imatge}
+                    alt={producto.nom}
+                    className="w-full h-full object-contain p-8 mix-blend-multiply"
+                  />
+                </div>
+                <div className="flex flex-col items-start text-left gap-2 pl-2">
+                  <p className="text-xs text-gray-400 uppercase tracking-widest">{producto.categoria}</p>
+                  <h2 className="text-lg font-medium tracking-wide hover:underline decoration-gray-900 underline-offset-4">
+                    {producto.nom}
+                  </h2>
+                  <p className="text-base font-light text-gray-900 mt-1">{producto.preu} €</p>
+                </div>
+              </Link>
+            </div>
           ))}
         </div>
       </div>
@@ -150,7 +151,7 @@ export default function Home() {
               to={`/categoria/${cat.nombre.toLowerCase()}`}
               className="group w-full flex flex-col cursor-pointer text-black no-underline"
             >
-              <div className="overflow-hidden bg-[#ede3ca] mb-4 relative aspect-[3/4]">
+              <div className="overflow-hidden mb-6 relative aspect-[3/4]">
                 <img
                   src={cat.imagen}
                   alt={cat.nombre}
@@ -158,7 +159,7 @@ export default function Home() {
                 />
               </div>
               <div className="text-left pl-2">
-                <h2 className="text-sm uppercase tracking-[0.2em] font-medium decoration-gray-900 underline-offset-4">
+                <h2 className="text-lg font-medium tracking-wide hover:underline decoration-gray-900 underline-offset-4">
                   {cat.nombre}
                 </h2>
               </div>
@@ -205,7 +206,7 @@ export default function Home() {
 
       <div className="py-24 px-6 max-w-[1400px] mx-auto border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-start">
-          <div className="md:col-span-7 h-full min-h-[300px] bg-gray-200 relative aspect-[4/3] overflow-hidden">
+          <div className="w-full md:col-span-7 h-full min-h-[300px] bg-gray-200 relative aspect-[4/3] overflow-hidden">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2985.636603248881!2d2.1074853!3d41.5454486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a494e330555555%3A0x1234567890abcdef!2sCarrer%20de%20Girona%2C%20208%2C%2008203%20Sabadell%2C%20Barcelona!5e0!3m2!1ses!2ses!4v1600000000000!5m2!1ses!2ses"
               width="100%"

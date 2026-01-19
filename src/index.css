@@ -8,5 +8,15 @@ body {
   font-family: Arial, sans-serif;
   color: var(--main-color);
   background: #fff;
+  overflow-x: hidden;
 }
 
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

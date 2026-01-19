@@ -65,7 +65,7 @@ export default function SearchPage() {
                                     <img
                                         src={producto.imatge}
                                         alt={producto.nom}
-                                        className="w-full h-full object-contain p-8 transition-transform duration-700 ease-out transform group-hover:scale-105 mix-blend-multiply"
+                                        className="w-full h-full object-contain p-8 mix-blend-multiply"
                                     />
                                 </div>
                                 <div className="flex flex-col items-start text-left gap-2 pl-2">

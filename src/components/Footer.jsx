@@ -22,6 +22,7 @@ export default function Footer() {
             <li>Email: info.soldevilla@gmail.com</li>
             <li>Teléfono: +34 900 123 456</li>
             <li>Dirección: Carrer de Girona 208, Sabadell</li>
+            <li>Horario: Lunes - Viernes: 10-20h | Sábado: 11-15h</li>
           </ul>
         </div>
 

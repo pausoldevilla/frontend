@@ -88,8 +88,27 @@ export default function NavBar() {
 
     const accountRoute = isLoggedIn ? "/account" : "/login";
 
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > lastScrollY) {
+                // Scrolling down
+                setIsVisible(false);
+            } else {
+                // Scrolling up
+                setIsVisible(true);
+            }
+            setLastScrollY(window.scrollY);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [lastScrollY]);
+
     return (
-        <header className="fixed top-0 left-0 w-full border-b border-gray-200 z-50 bg-white">
+        <header className={`fixed top-0 left-0 w-full border-b border-gray-200 z-50 bg-white transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
             {/* Desktop Menu */}
             <div className="hidden lg:flex justify-center items-center p-3 relative bg-white shadow">
                 <div className="absolute left-10 flex gap-6 items-center">
