@@ -9,7 +9,7 @@ export default function About() {
     return (
         <>
             <NavBar />
-            <div className="pt-32 pb-24 px-6 max-w-[1400px] mx-auto min-h-screen font-sans text-gray-900">
+            <div className="pt-32 pb-10 md:pb-24 px-6 max-w-[1400px] mx-auto min-h-screen font-sans text-gray-900">
                 <button
                     onClick={() => navigate(-1)}
                     className="mb-12 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors"
@@ -17,7 +17,7 @@ export default function About() {
                     ← Volver
                 </button>
 
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16 md:mb-32">
                     <div className="md:col-span-4">
                         <h1 className="text-2xl md:text-3xl font-medium uppercase tracking-[0.2em]">Nosotros</h1>
                     </div>
@@ -55,7 +55,7 @@ export default function About() {
                     </div>
                 </div>
 
-                <div className="mt-40 grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
+                <div className="mt-16 md:mt-40 grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
                     <div className="md:col-span-4">
                         <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-6">Responsabilidad</h3>
                         <p className="font-light text-sm text-gray-600 leading-relaxed">

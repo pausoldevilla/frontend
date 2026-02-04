@@ -14,7 +14,7 @@ export default function Jardines() {
         <div className="bg-white min-h-screen">
             <NavBar />
 
-            <main className="pt-24 md:pt-32 pb-20 px-6 max-w-[1400px] mx-auto">
+            <main className="pt-24 md:pt-32 pb-10 md:pb-20 px-6 max-w-[1400px] mx-auto">
                 {/* Header Section */}
                 <div className="flex flex-col mb-20 animate-in fade-in slide-in-from-bottom-4 duration-1000">
                     <button
@@ -33,7 +33,7 @@ export default function Jardines() {
                 </div>
 
                 {/* Hero Image Section */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center mb-32">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center mb-16 md:mb-32">
                     <div className="md:col-span-8 overflow-hidden bg-gray-50 aspect-[16/9] relative group">
                         <img
                             src="/img/jardin.jpg"
@@ -60,7 +60,7 @@ export default function Jardines() {
                     </div>
                 </div>
 
-                <div className="mt-40 grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
+                <div className="mt-16 md:mt-40 grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
                     <div className="md:col-span-4">
                         <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-6">Soluciones Integrales</h3>
                         <p className="font-light text-sm text-gray-600 mb-8 leading-relaxed">

@@ -52,7 +52,7 @@ export default function Shop() {
     return (
         <>
             <NavBar />
-            <div className="pt-32 pb-12 px-6 max-w-[1400px] mx-auto min-h-screen">
+            <div className="pt-32 pb-10 px-6 max-w-[1400px] mx-auto min-h-screen">
                 <button
                     onClick={() => navigate("/")}
                     className="mb-12 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors pl-2"
@@ -64,7 +64,7 @@ export default function Shop() {
                     Catálogo
                 </h1>
 
-                <p className="text-lg text-gray-600 leading-relaxed font-light mb-16 pl-2 max-w-2xl">
+                <p className="text-lg text-gray-600 leading-relaxed font-light mb-10 md:mb-16 pl-2 max-w-2xl">
                     Explora todo nuestro catálogo. Filtra por precio y categorías para encontrar la planta perfecta para tu espacio.
                 </p>
 
@@ -104,7 +104,7 @@ export default function Shop() {
                                 </button>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-16">
+                            <div className="grid grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10 md:gap-y-16">
                                 {filteredAndSortedProducts.map((producto) => (
                                     <Link
                                         key={producto._id}

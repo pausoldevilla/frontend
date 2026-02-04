@@ -35,14 +35,14 @@ export default function SearchPage() {
     return (
         <>
             <NavBar />
-            <div className="pt-32 pb-12 px-6 max-w-[1400px] mx-auto min-h-screen">
+            <div className="pt-32 pb-10 px-6 max-w-[1400px] mx-auto min-h-screen">
                 <button
                     onClick={() => navigate("/")}
                     className="mb-12 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors border-b border-transparent hover:border-black pb-1 pl-2"
                 >
                     ← Inicio
                 </button>
-                <h1 className="text-left text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] mb-16 pl-2">
+                <h1 className="text-left text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] mb-10 md:mb-16 pl-2">
                     Resultados para: "{query}"
                 </h1>
 
@@ -54,7 +54,7 @@ export default function SearchPage() {
                         <Link to="/" className="text-black underline mt-4 block">Volver al inicio</Link>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 md:gap-y-16">
                         {products.map((producto) => (
                             <Link
                                 key={producto._id}

@@ -11,7 +11,7 @@ export default function Cart() {
     return (
         <>
             <NavBar />
-            <div className="pt-32 pb-12 px-6 max-w-[1200px] mx-auto min-h-screen">
+            <div className="pt-32 pb-10 px-6 max-w-[1200px] mx-auto min-h-screen">
                 <button
                     onClick={() => navigate(-1)}
                     className="mb-8 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors border-b border-transparent hover:border-black pb-1"

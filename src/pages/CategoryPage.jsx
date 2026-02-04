@@ -53,7 +53,7 @@ export default function CategoryPage() {
     return (
         <>
             <NavBar />
-            <div className="pt-32 pb-12 px-6 max-w-[1400px] mx-auto min-h-screen">
+            <div className="pt-32 pb-10 px-6 max-w-[1400px] mx-auto min-h-screen">
                 <button
                     onClick={() => navigate("/")}
                     className="mb-12 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors pl-2"
@@ -64,7 +64,7 @@ export default function CategoryPage() {
                     {categoryName}
                 </h1>
 
-                <div className="mb-16 pl-2 max-w-2xl">
+                <div className="mb-10 md:mb-16 pl-2 max-w-2xl">
                     <p className="text-lg text-gray-600 leading-relaxed font-light">
                         {{
                             interior: "Transforma tus espacios interiores en oasis de tranquilidad con nuestra selección de plantas de interior. Perfectas para purificar el aire y añadir un toque de vida a cualquier rincón de tu hogar, estas plantas se adaptan a diversas condiciones de luz y estilo.",
@@ -108,7 +108,7 @@ export default function CategoryPage() {
                                 </button>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-16">
+                            <div className="grid grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10 md:gap-y-16">
                                 {filteredAndSortedProducts.map((producto) => (
                                     <Link
                                         key={producto._id}

@@ -52,7 +52,7 @@ export default function Contacto() {
   return (
     <>
       <NavBar />
-      <div className="pt-24 pb-12 lg:pt-40 min-h-screen container mx-auto px-6">
+      <div className="pt-24 pb-10 lg:pt-40 min-h-screen container mx-auto px-6">
 
         <div className="flex flex-col md:flex-row gap-12 md:gap-24 max-w-6xl mx-auto items-start">
 

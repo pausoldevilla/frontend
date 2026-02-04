@@ -119,7 +119,7 @@ export default function Account() {
         <div>
             <NavBar />
             {/* MODIFICACIÓN: Añado la clase "pt-16" al contenedor principal para evitar que se esconda detrás del NavBar. */}
-            <div className="flex justify-center pt-24 pb-12 lg:pt-40">
+            <div className="flex justify-center pt-24 pb-10 lg:pt-40">
                 {/* MODIFICACIÓN: Quité el 'mt-10' de aquí, ya que el 'pt-16' ahora maneja el espacio superior. Dejo 'mb-10'. */}
                 <div className="w-full max-w-md">
                     <button
