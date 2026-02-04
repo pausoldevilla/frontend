@@ -38,11 +38,11 @@ export default function SearchPage() {
             <div className="pt-32 pb-12 px-6 max-w-[1400px] mx-auto min-h-screen">
                 <button
                     onClick={() => navigate("/")}
-                    className="mb-12 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors pl-2"
+                    className="mb-12 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors border-b border-transparent hover:border-black pb-1 pl-2"
                 >
                     ← Inicio
                 </button>
-                <h1 className="text-left text-3xl md:text-4xl font-medium tracking-tight mb-16 pl-2">
+                <h1 className="text-left text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] mb-16 pl-2">
                     Resultados para: "{query}"
                 </h1>
 

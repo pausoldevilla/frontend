@@ -1,17 +1,17 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
 
-export default function CategoryPage() {
-    const { categoryName } = useParams();
+export default function Shop() {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // Filter states
     const [priceRange, setPriceRange] = useState([0, 200]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [sortBy, setSortBy] = useState("default");
 
@@ -21,10 +21,7 @@ export default function CategoryPage() {
             .then((res) => res.json())
             .then((data) => {
                 if (data.status === "success" && Array.isArray(data.data)) {
-                    const filtered = data.data.filter(
-                        (p) => p.categoria.toLowerCase() === categoryName.toLowerCase()
-                    );
-                    setProducts(filtered);
+                    setProducts(data.data);
                 }
                 setLoading(false);
             })
@@ -32,14 +29,16 @@ export default function CategoryPage() {
                 console.error("Error fetching products:", err);
                 setLoading(false);
             });
-    }, [categoryName]);
+    }, []);
 
     const filteredAndSortedProducts = useMemo(() => {
         const filtered = products.filter(producto => {
             const matchesPrice = producto.preu <= priceRange[1];
+            const matchesCategory = selectedCategories.length === 0 ||
+                selectedCategories.some(cat => cat.toLowerCase() === producto.categoria.toLowerCase());
             const matchesSearch = !searchQuery.trim() ||
                 producto.nom.toLowerCase().includes(searchQuery.toLowerCase());
-            return matchesPrice && matchesSearch;
+            return matchesPrice && matchesCategory && matchesSearch;
         });
 
         if (sortBy === "asc") {
@@ -48,7 +47,7 @@ export default function CategoryPage() {
             return [...filtered].sort((a, b) => b.preu - a.preu);
         }
         return filtered;
-    }, [products, priceRange, searchQuery, sortBy]);
+    }, [products, priceRange, selectedCategories, searchQuery, sortBy]);
 
     return (
         <>
@@ -60,51 +59,48 @@ export default function CategoryPage() {
                 >
                     ← Inicio
                 </button>
-                <h1 className="text-left text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] mb-6 pl-2">
-                    {categoryName}
+
+                <h1 className="text-left text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] mb-4 pl-2">
+                    Catálogo
                 </h1>
 
-                <div className="mb-16 pl-2 max-w-2xl">
-                    <p className="text-lg text-gray-600 leading-relaxed font-light">
-                        {{
-                            interior: "Transforma tus espacios interiores en oasis de tranquilidad con nuestra selección de plantas de interior. Perfectas para purificar el aire y añadir un toque de vida a cualquier rincón de tu hogar, estas plantas se adaptan a diversas condiciones de luz y estilo.",
-                            exterior: "Embellece tu jardín, terraza o balcón con nuestra colección de exterior. Desde arbustos resistentes hasta flores vibrantes que desafían las estaciones, encuentra todo lo que necesitas para crear tu propio paraíso al aire libre.",
-                            suculentas: "Descubre la belleza resistente y de bajo mantenimiento. Nuestras suculentas son ideales para quienes buscan añadir verde sin complicaciones, ofreciendo formas geométricas únicas y colores fascinantes que decoran por sí mismos.",
-                            florales: "Llena tu vida de color y aroma. Nuestra colección de plantas florales está cuidadosamente seleccionada para traer alegría y frescura, convirtiendo cualquier espacio en un espectáculo visual vibrante."
-                        }[categoryName.toLowerCase()] || "Explora nuestra selección de productos de alta calidad, elegidos pensando en ti."}
-                    </p>
-                </div>
+                <p className="text-lg text-gray-600 leading-relaxed font-light mb-16 pl-2 max-w-2xl">
+                    Explora todo nuestro catálogo. Filtra por precio y categorías para encontrar la planta perfecta para tu espacio.
+                </p>
 
                 <div className="flex flex-col lg:flex-row gap-12">
                     {/* Sidebar */}
                     <Sidebar
                         priceRange={priceRange}
                         setPriceRange={setPriceRange}
+                        selectedCategories={selectedCategories}
+                        setSelectedCategories={setSelectedCategories}
                         searchQuery={searchQuery}
                         setSearchQuery={setSearchQuery}
                         sortBy={sortBy}
                         setSortBy={setSortBy}
-                        showCategories={false}
+                        showCategories={true}
                     />
 
                     {/* Product Grid */}
                     <div className="flex-1">
                         {loading ? (
-                            <p className="text-center text-lg">Cargando productos...</p>
+                            <p className="text-center text-lg">Cargando catálogo...</p>
                         ) : filteredAndSortedProducts.length === 0 ? (
                             <div className="text-center py-20 flex flex-col items-center gap-4">
                                 <p className="text-lg text-gray-500 font-light italic">
-                                    No hay productos que coincidan con los filtros seleccionados.
+                                    No se han encontrado productos que coincidan con los filtros.
                                 </p>
                                 <button
                                     onClick={() => {
                                         setPriceRange([0, 200]);
+                                        setSelectedCategories([]);
                                         setSearchQuery("");
                                         setSortBy("default");
                                     }}
-                                    className="text-[10px] uppercase tracking-[0.3em] font-medium border-b border-black pb-1 hover:text-gray-400 hover:border-gray-400 transition-all font-sans w-fit"
+                                    className="text-[10px] uppercase tracking-[0.3em] font-medium border-b border-black pb-1 hover:text-gray-400 hover:border-gray-400 transition-all font-sans"
                                 >
-                                    Limpiar filtros
+                                    Limpiar todos los filtros
                                 </button>
                             </div>
                         ) : (

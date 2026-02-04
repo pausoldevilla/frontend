@@ -64,7 +64,7 @@ export default function Login() {
       <div className="w-full max-w-md p-8 md:p-10 relative">
         <button
           onClick={() => navigate("/")}
-          className="absolute top-0 left-8 md:left-10 text-gray-400 hover:text-black flex items-center gap-2 uppercase text-[10px] tracking-[0.3em] font-medium transition-colors"
+          className="absolute top-0 left-8 md:left-10 text-gray-400 hover:text-black flex items-center gap-2 uppercase text-[10px] tracking-[0.3em] font-medium transition-colors border-b border-transparent hover:border-black pb-1"
         >
           ← Inicio
         </button>
@@ -76,10 +76,10 @@ export default function Login() {
           </Link>
         </div>
 
-        <p className="text-3xl font-medium tracking-tight text-gray-800 mt-4 mb-2 text-left">
-          Bienvenido al área de inicio de sesión.
+        <p className="text-2xl font-medium uppercase tracking-[0.2em] text-gray-800 mt-4 mb-4 text-left">
+          Iniciar Sesión
         </p>
-        <p className="text-lg text-gray-600 mt-4 mb-2 text-left">
+        <p className="text-base text-gray-600 mb-8 text-left font-light leading-relaxed">
           Introduce tus credenciales para continuar.
         </p>
 
@@ -131,10 +131,10 @@ export default function Login() {
             />
           </div>
 
-          <div>
+          <div className="pt-8">
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-semibold text-white bg-gray-900 hover:bg-black transition duration-150"
+              className="w-full flex justify-center py-5 px-4 text-white bg-black hover:bg-gray-800 transition-all uppercase text-[11px] tracking-[0.3em] font-medium"
             >
               Entrar
             </button>

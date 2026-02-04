@@ -63,18 +63,21 @@ export default function Home() {
 
 
 
-      <div className="pt-0 pb-24 px-6 max-w-[1400px] mx-auto">
-        <div className="flex justify-between items-end mb-16 px-2">
+      <div className="pt-0 pb-32 px-6 max-w-[1400px] mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 px-2 gap-8">
           <div>
-            <h1 className="text-left text-xl md:text-2xl font-medium uppercase tracking-widest mb-4">
-              Productos Destacados
+            <h1 className="text-left text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] mb-4">
+              Catálogo
             </h1>
-            <p className="text-gray-500 font-light max-w-xl">
+            <p className="text-gray-500 font-light max-w-xl text-lg leading-relaxed">
               Una cuidada selección de nuestras plantas favoritas, listas para transformar tu hogar en un refugio natural.
             </p>
           </div>
-          <Link to="/search" className="text-sm uppercase tracking-widest border-b border-black pb-1 hover:text-gray-600 hover:border-gray-600 transition-colors">
-            Ver mas
+          <Link
+            to="/tienda"
+            className="text-[11px] uppercase tracking-[0.3em] font-medium border-b border-black pb-2 hover:text-gray-400 hover:border-gray-400 transition-all group whitespace-nowrap inline-flex items-center gap-2 w-fit"
+          >
+            <span>Ver colección completa</span> <span className="inline-block transform group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>
 
@@ -117,18 +120,18 @@ export default function Home() {
             />
           </div>
           <div className="md:col-span-5 pt-8 md:pt-16">
-            <h2 className="text-3xl font-medium mb-8 uppercase tracking-widest">Nuestra Visión</h2>
+            <h2 className="text-3xl font-medium mb-8 uppercase tracking-[0.2em]">Nuestra Visión</h2>
             <p className="text-lg font-light text-gray-600 leading-relaxed mb-10">
               Buscamos el equilibrio entre la arquitectura moderna y la naturaleza.
               Creemos que el diseño no termina en el mobiliario, sino en la vida que crece a su alrededor.
               Nuestra labor transforma casas en hogares.
             </p>
             <Link
-              to="/about"
-              className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] font-medium group decoration-gray-400 transition-all duration-300"
+              to="/acerca"
+              className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] font-medium border-b border-black pb-2 hover:text-gray-400 hover:border-gray-400 transition-all group w-fit"
             >
               <span>Conoce nuestra historia</span>
-              <span className="text-sm">→</span>
+              <span className="inline-block transform group-hover:translate-x-1 transition-transform">→</span>
             </Link>
           </div>
         </div>
@@ -136,10 +139,10 @@ export default function Home() {
 
       <div id="categories" className="py-24 px-6 max-w-[1400px] mx-auto border-t border-gray-100">
         <div className="mb-16">
-          <h1 className="text-left text-xl md:text-2xl font-medium uppercase tracking-widest mb-4 pl-2">
+          <h1 className="text-left text-xl md:text-2xl font-medium uppercase tracking-[0.2em] mb-4 pl-2">
             Categorías
           </h1>
-          <p className="text-gray-500 font-light pl-2 max-w-xl">
+          <p className="text-gray-500 font-light pl-2 max-w-xl text-lg leading-relaxed">
             Explora nuestras colecciones diseñadas para cada tipo de ambiente y jardinero. Desde lo más resistente hasta lo más exótico.
           </p>
         </div>
@@ -188,10 +191,10 @@ export default function Home() {
             </div>
             <Link
               to="/jardines"
-              className="mt-10 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] font-medium group decoration-gray-400 transition-all duration-300"
+              className="mt-10 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] font-medium border-b border-black pb-2 hover:text-gray-400 hover:border-gray-400 transition-all group w-fit"
             >
               <span>Ver proyectos de paisajismo</span>
-              <span className="text-sm">→</span>
+              <span className="inline-block transform group-hover:translate-x-1 transition-transform">→</span>
             </Link>
           </div>
           <div className="md:col-span-8 overflow-hidden bg-[#ede3ca] aspect-[16/9] relative group order-1 md:order-2">
@@ -220,33 +223,33 @@ export default function Home() {
             ></iframe>
           </div>
           <div className="md:col-span-5 pt-8 md:pt-16">
-            <h2 className="text-3xl font-medium mb-8 uppercase tracking-widest">Contacto</h2>
+            <h2 className="text-3xl font-medium mb-8 uppercase tracking-[0.2em]">Contacto</h2>
             <p className="text-lg font-light text-gray-600 leading-relaxed mb-6">
               Nos encantaría recibirte en nuestro espacio. Un refugio verde en el centro de la ciudad donde inspirarte.
             </p>
             <div className="space-y-4 text-sm font-light text-gray-600 mb-10">
               <div>
-                <p className="font-medium text-gray-900 uppercase text-xs tracking-wider mb-1">Visítanos</p>
+                <p className="font-medium text-gray-900 uppercase text-[10px] tracking-[0.2em] mb-1">Visítanos</p>
                 <p>Carrer de Girona 208</p>
                 <p>08203 Sabadell, Barcelona</p>
               </div>
               <div>
-                <p className="font-medium text-gray-900 uppercase text-xs tracking-wider mb-1">Contacto</p>
+                <p className="font-medium text-gray-900 uppercase text-[10px] tracking-[0.2em] mb-1">Contacto</p>
                 <p>info.soldevilla@gmail.com</p>
                 <p>+34 900 123 456</p>
               </div>
               <div>
-                <p className="font-medium text-gray-900 uppercase text-xs tracking-wider mb-1">Horario</p>
+                <p className="font-medium text-gray-900 uppercase text-[10px] tracking-[0.2em] mb-1">Horario</p>
                 <p>Lunes - Viernes: 10:00 - 20:00</p>
                 <p>Sábado: 11:00 - 15:00</p>
               </div>
             </div>
             <Link
               to="/contacto"
-              className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] font-medium group decoration-gray-400 transition-all duration-300"
+              className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] font-medium border-b border-black pb-2 hover:text-gray-400 hover:border-gray-400 transition-all group w-fit"
             >
-              <span>Mas información</span>
-              <span className="text-sm">→</span>
+              <span>Más información</span>
+              <span className="inline-block transform group-hover:translate-x-1 transition-transform">→</span>
             </Link>
           </div>
         </div>

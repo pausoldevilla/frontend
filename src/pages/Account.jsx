@@ -124,62 +124,62 @@ export default function Account() {
                 <div className="w-full max-w-md">
                     <button
                         onClick={() => navigate(-1)}
-                        className="mb-8 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors"
+                        className="mb-8 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors border-b border-transparent hover:border-black pb-1"
                     >
                         ← Volver
                     </button>
 
-                    <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-12 text-gray-900">
+                    <h1 className="text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] mb-12 text-gray-900">
                         Mi Cuenta
                     </h1>
 
-                    <h2 className="text-xl font-medium tracking-tight text-gray-700 mb-4">Información de la Cuenta</h2>
-                    <div className="shadow-md p-4 mb-6 space-y-3 bg-white bg-opacity-80">
+                    <h2 className="text-[11px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-6">Información de la Cuenta</h2>
+                    <div className="bg-white border border-gray-100 p-6 mb-10 space-y-4">
                         <div className="flex flex-col">
-                            <span className="text-gray-500 font-medium">Nombre:</span>
-                            <span>{userData.titol} {userData.name}</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 font-medium">Nombre</span>
+                            <span className="text-base font-light">{userData.titol} {userData.name}</span>
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-gray-500 font-medium">Email:</span>
-                            <span>{userData.email}</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 font-medium">Email</span>
+                            <span className="text-base font-light">{userData.email}</span>
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-gray-500 font-medium">Teléfono:</span>
-                            <span>{userData.telefon}</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 font-medium">Teléfono</span>
+                            <span className="text-base font-light">{userData.telefon}</span>
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-gray-500 font-medium">Fecha de Nacimiento:</span>
-                            <span>{userData.dataNaixement}</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 font-medium">Fecha de Nacimiento</span>
+                            <span className="text-base font-light">{userData.dataNaixement}</span>
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-gray-500 font-medium">Miembro desde:</span>
-                            <span>{userData.memberSince}</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 font-medium">Miembro desde</span>
+                            <span className="text-base font-light">{userData.memberSince}</span>
                         </div>
                     </div>
 
-                    <h2 className="text-xl font-semibold text-gray-700 mb-2">Dirección de Facturación</h2>
-                    <div className="shadow-md p-4 mb-6 space-y-3 bg-white bg-opacity-80">
+                    <h2 className="text-[11px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-6">Dirección de Facturación</h2>
+                    <div className="bg-white border border-gray-100 p-6 mb-12 space-y-4">
                         <div className="flex flex-col">
-                            <span className="text-gray-500 font-medium">Calle:</span>
-                            <span>{userData.adreca.carrer}</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 font-medium">Calle</span>
+                            <span className="text-base font-light">{userData.adreca.carrer}</span>
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-gray-500 font-medium">Ciudad:</span>
-                            <span>{userData.adreca.ciutat}</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 font-medium">Ciudad</span>
+                            <span className="text-base font-light">{userData.adreca.ciutat}</span>
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-gray-500 font-medium">Código Postal:</span>
-                            <span>{userData.adreca.codiPostal}</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 font-medium">Código Postal</span>
+                            <span className="text-base font-light">{userData.adreca.codiPostal}</span>
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-gray-500 font-medium">País:</span>
-                            <span>{userData.adreca.pais}</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 font-medium">País</span>
+                            <span className="text-base font-light">{userData.adreca.pais}</span>
                         </div>
                     </div>
 
                     <button
                         onClick={handleLogout}
-                        className="w-full flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-semibold text-white bg-gray-900 hover:bg-black transition duration-150"
+                        className="w-full bg-black text-white py-5 px-4 hover:bg-gray-800 transition-all uppercase text-[11px] tracking-[0.3em] font-medium"
                     >
                         Cerrar Sesión
                     </button>

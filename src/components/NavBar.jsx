@@ -81,7 +81,7 @@ export default function NavBar() {
     ];
 
     const rightMenuItems = [
-        { name: "Jardines", path: "/jardines" },
+        { name: "Paisajismo", path: "/paisajismo" },
         { name: "Acerca", path: "/acerca" },
         { name: "Contacto", path: "/contacto" }
     ];
@@ -118,7 +118,7 @@ export default function NavBar() {
                         </svg>
                     </button>
                     {leftMenuItems.map(item => (
-                        <Link key={item.name} to={item.path} className="text-gray-800 hover:text-red-900 transition-colors">
+                        <Link key={item.name} to={item.path} className="text-gray-800 hover:text-black transition-colors uppercase text-[11px] tracking-[0.2em] font-medium">
                             {item.name}
                         </Link>
                     ))}
@@ -127,17 +127,17 @@ export default function NavBar() {
                 <div className="logo font-serif font-bold text-lg tracking-wider flex flex-col items-center justify-center">
                     <Link to="/" className="flex flex-col items-center text-black no-underline">
                         <img src="/img/logo.png" className="w-12 h-12" alt="Logo Soldevilla" />
-                        soldevilla
+                        <span className="uppercase tracking-[0.3em] text-sm mt-1">soldevilla</span>
                     </Link>
                 </div>
 
                 <div className="absolute right-10 flex gap-6 items-center">
                     {rightMenuItems.map(item => (
-                        <Link key={item.name} to={item.path} className="text-gray-800 hover:text-red-900 transition-colors">
+                        <Link key={item.name} to={item.path} className="text-gray-800 hover:text-black transition-colors uppercase text-[11px] tracking-[0.2em] font-medium">
                             {item.name}
                         </Link>
                     ))}
-                    <Link to={accountRoute} className="hover:text-red-900 text-gray-800">Mi cuenta</Link>
+                    <Link to={accountRoute} className="hover:text-black text-gray-800 uppercase text-[11px] tracking-[0.2em] font-medium">Mi cuenta</Link>
 
                     <Link to="/cart" className="relative text-gray-800 hover:text-red-900 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">

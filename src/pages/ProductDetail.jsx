@@ -55,25 +55,23 @@ export default function ProductDetail() {
                 <div className="w-full md:w-1/2 p-8 md:p-20 flex flex-col bg-white justify-center">
                     <button
                         onClick={() => navigate(-1)}
-                        className="mb-12 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-xs tracking-[0.2em] font-medium transition-colors"
+                        className="mb-12 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors border-b border-transparent hover:border-black pb-1"
                     >
                         ← Volver
                     </button>
 
-                    <h1 className="text-5xl md:text-6xl font-medium tracking-tight mb-16 text-gray-900 leading-tight">
+                    <h1 className="text-4xl md:text-5xl font-medium uppercase tracking-[0.2em] mb-16 text-gray-900 leading-tight">
                         {product.nom}
                     </h1>
 
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16 border-t border-gray-100 pt-10">
-                        <div className="md:col-span-4 space-y-8">
-                            <div>
-                                <span className="block text-xs text-gray-400 uppercase tracking-widest mb-2">Precio</span>
-                                <span className="text-2xl font-light text-gray-900">{product.preu} €</span>
-                            </div>
-                            <div>
-                                <span className="block text-xs text-gray-400 uppercase tracking-widest mb-2">Categoría</span>
-                                <span className="text-base text-gray-700">{product.categoria}</span>
-                            </div>
+                        <div>
+                            <span className="block text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-2 font-medium">Precio</span>
+                            <span className="text-2xl font-light text-gray-900">{product.preu} €</span>
+                        </div>
+                        <div>
+                            <span className="block text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-2 font-medium">Categoría</span>
+                            <span className="text-base text-gray-700 uppercase tracking-widest">{product.categoria}</span>
                         </div>
 
                         <div className="md:col-span-8">
@@ -108,7 +106,7 @@ export default function ProductDetail() {
                                 addToCart(product, quantity);
                                 alert("Producto añadido a la cesta");
                             }}
-                            className="flex-1 bg-gray-900 text-white px-8 py-4 hover:bg-black transition-all text-sm uppercase tracking-widest w-full sm:w-auto"
+                            className="flex-1 bg-gray-900 text-white px-8 py-5 hover:bg-black transition-all text-[11px] uppercase tracking-[0.3em] font-medium w-full sm:w-auto"
                         >
                             Añadir a la cesta
                         </button>

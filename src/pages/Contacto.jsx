@@ -60,11 +60,11 @@ export default function Contacto() {
           <div className="w-full md:w-1/2">
             <button
               onClick={() => navigate(-1)}
-              className="mb-8 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors"
+              className="mb-8 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors border-b border-transparent hover:border-black pb-1"
             >
               ← Volver
             </button>
-            <h1 className="text-left text-4xl md:text-5xl font-medium tracking-tight text-gray-900 mb-8 leading-tight">
+            <h1 className="text-left text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] text-gray-900 mb-12 leading-tight">
               Contacta con nosotros
             </h1>
 
@@ -73,24 +73,23 @@ export default function Contacto() {
                 Estamos aquí para ayudarte a transformar tus espacios. Si tienes dudas sobre nuestras plantas, necesitas asesoramiento para tu jardín o simplemente quieres saber más sobre nuestros servicios, no dudes en escribirnos. Nuestro equipo de expertos te responderá lo antes posible.
               </p>
 
-              <h3 className="font-semibold text-xl mb-4 text-gray-900">Información de Contacto</h3>
+              <h3 className="text-[11px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-8 border-t border-gray-100 pt-8">Información de Contacto</h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-gray-700">
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-gray-900 mb-1 font-bold">Email</span>
-                  <span>info.soldevilla@gmail.com</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2 font-medium">Email</span>
+                  <span className="text-base font-light">info.soldevilla@gmail.com</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-gray-900 mb-1 font-bold">Teléfono</span>
-                  <span>+34 900 123 456</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2 font-medium">Teléfono</span>
+                  <span className="text-base font-light">+34 900 123 456</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-gray-900 mb-1 font-bold">Dirección</span>
-                  <span>Carrer de Girona 208, Sabadell</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2 font-medium">Dirección</span>
+                  <span className="text-base font-light">Carrer de Girona 208, Sabadell</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-gray-900 mb-1 font-bold">Horario</span>
-                  <span>Lunes - Viernes: 10:00 - 20:00</span>
-                  <span>Sábado: 11:00 - 15:00</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2 font-medium">Horario</span>
+                  <span className="text-base font-light">Lu-Vi 10:00-20:00 | Sa 11:00-15:00</span>
                 </div>
               </div>
             </div>
@@ -114,59 +113,61 @@ export default function Contacto() {
                 </p>
               )}
 
-              <div>
-                <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-2">
-                  Nombre
-                </label>
-                <input
-                  type="text"
-                  id="nombre"
-                  name="nombre"
-                  value={formData.nombre}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300"
-                  placeholder="Tu Nombre"
-                />
+              <div className="space-y-8">
+                <div>
+                  <label htmlFor="nombre" className="block text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-3 font-medium">
+                    Nombre
+                  </label>
+                  <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    value={formData.nombre}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-0 py-3 border-b border-gray-200 focus:border-black outline-none transition-colors text-base font-light bg-transparent"
+                    placeholder="TU NOMBRE"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-3 font-medium">
+                    Correo Electrónico
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-0 py-3 border-b border-gray-200 focus:border-black outline-none transition-colors text-base font-light bg-transparent"
+                    placeholder="TU@CORREO.COM"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="mensaje" className="block text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-3 font-medium">
+                    Mensaje
+                  </label>
+                  <textarea
+                    id="mensaje"
+                    name="mensaje"
+                    rows="4"
+                    value={formData.mensaje}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-0 py-3 border-b border-gray-200 focus:border-black outline-none transition-colors text-base font-light bg-transparent resize-none"
+                    placeholder="ESCRIBE TU MENSAJE AQUÍ..."
+                  ></textarea>
+                </div>
               </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Correo Electrónico
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300"
-                  placeholder="tu@correo.com"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="mensaje" className="block text-sm font-medium text-gray-700 mb-2">
-                  Mensaje
-                </label>
-                <textarea
-                  id="mensaje"
-                  name="mensaje"
-                  rows="5"
-                  value={formData.mensaje}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300"
-                  placeholder="Escribe tu mensaje aquí..."
-                ></textarea>
-              </div>
-
-              <div>
+              <div className="pt-8">
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="w-full flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-semibold text-white bg-gray-900 hover:bg-black transition duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex justify-center py-5 px-4 text-white bg-black hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed uppercase text-[11px] tracking-[0.3em] font-medium"
                 >
                   {status === "loading" ? "Enviando..." : "Enviar Mensaje"}
                 </button>

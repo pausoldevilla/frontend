@@ -14,11 +14,11 @@ export default function Cart() {
             <div className="pt-32 pb-12 px-6 max-w-[1200px] mx-auto min-h-screen">
                 <button
                     onClick={() => navigate(-1)}
-                    className="mb-8 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors"
+                    className="mb-8 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors border-b border-transparent hover:border-black pb-1"
                 >
                     ← Volver
                 </button>
-                <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-12 tracking-tight">Tu Cesta</h1>
+                <h1 className="text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] mb-12">Tu Cesta</h1>
 
                 {cartItems.length === 0 ? (
                     <div className="text-center py-20">
@@ -45,8 +45,8 @@ export default function Cart() {
                                         </div>
 
                                         <div className="flex items-end justify-between mt-6">
-                                            <div className="flex items-center gap-4">
-                                                <span className="text-xs uppercase tracking-widest text-gray-400">Cantidad</span>
+                                            <div className="flex items-center gap-6">
+                                                <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-medium">Cantidad</span>
                                                 <div className="flex items-center gap-3">
                                                     <button
                                                         className="w-6 h-6 flex items-center justify-center rounded-full border border-gray-200 hover:border-gray-900 transition-colors text-sm"
@@ -84,7 +84,7 @@ export default function Cart() {
 
                         <div className="md:col-span-4">
                             <div className="bg-gray-50 p-10 sticky top-32">
-                                <h2 className="text-lg font-medium mb-8 uppercase tracking-widest">Resumen</h2>
+                                <h2 className="text-[11px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-8">Resumen</h2>
                                 <div className="flex justify-between mb-4 text-sm">
                                     <span className="text-gray-600">Subtotal</span>
                                     <span className="font-light">{getCartTotal().toFixed(2)} €</span>
@@ -97,7 +97,7 @@ export default function Cart() {
                                     <span className="text-base uppercase tracking-widest font-medium">Total</span>
                                     <span className="text-2xl font-light">{getCartTotal().toFixed(2)} €</span>
                                 </div>
-                                <button className="w-full bg-gray-900 text-white py-4 hover:bg-black transition-all text-xs uppercase tracking-[0.2em]">
+                                <button className="w-full bg-gray-900 text-white py-5 hover:bg-black transition-all text-[11px] uppercase tracking-[0.3em] font-medium">
                                     Tramitar Pedido
                                 </button>
                             </div>

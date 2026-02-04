@@ -16,6 +16,7 @@ import CategoryPage from './pages/CategoryPage.jsx';
 import SearchPage from './pages/SearchPage.jsx';
 import About from './pages/About.jsx';
 import Jardines from './pages/Jardines.jsx';
+import Shop from './pages/Shop.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -29,7 +30,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="account" element={<Account />} />
             <Route path="contacto" element={<Contact />} />
             <Route path="acerca" element={<About />} />
-            <Route path="jardines" element={<Jardines />} />
+            <Route path="paisajismo" element={<Jardines />} />
+            <Route path="tienda" element={<Shop />} />
             <Route path="producto/:id" element={<ProductDetail />} />
             <Route path="categoria/:categoryName" element={<CategoryPage />} />
             <Route path="search" element={<SearchPage />} />

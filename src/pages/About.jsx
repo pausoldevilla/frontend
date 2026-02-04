@@ -19,13 +19,13 @@ export default function About() {
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32">
                     <div className="md:col-span-4">
-                        <h1 className="text-4xl md:text-5xl font-medium tracking-tight">Nosotros</h1>
+                        <h1 className="text-2xl md:text-3xl font-medium uppercase tracking-[0.2em]">Nosotros</h1>
                     </div>
                     <div className="md:col-span-8">
                         <p className="text-xl md:text-2xl font-light leading-relaxed text-gray-700 max-w-2xl">
-                            Soldevilla es mucho más que una tienda de plantas.
-                            Somos un proyecto dedicado al diseño, la botánica y la creación de espacios
-                            llenos de vida con sede en Sabadell, Barcelona.
+                            Soldevilla es un estudio de paisajismo y curaduría botánica con sede en Sabadell.
+                            A través de un enfoque técnico y estético, diseñamos ecosistemas que trascienden
+                            lo ornamental para convertirse en parte esencial de la experiencia arquitectónica.
                         </p>
                     </div>
                 </div>
@@ -39,40 +39,40 @@ export default function About() {
                         />
                     </div>
                     <div className="md:col-span-5 pt-8 md:pt-16">
-                        <h2 className="text-3xl font-medium mb-8 uppercase tracking-widest">Nuestra Visión</h2>
+                        <h2 className="text-2xl md:text-3xl font-medium mb-8 uppercase tracking-[0.2em]">Diseño de Autor</h2>
                         <p className="text-lg font-light text-gray-600 leading-relaxed mb-10">
-                            Buscamos el equilibrio entre la arquitectura moderna y la naturaleza.
-                            Creemos que el diseño no termina en el mobiliario, sino en la vida que crece a su alrededor.
-                            Nuestra labor transforma casas en hogares y espacios de trabajo en refugios.
+                            Nuestra práctica se centra en el desarrollo de proyectos integrales donde la botánica
+                            y la estructura convergen. Entendemos cada intervención como una oportunidad para
+                            regenerar el entorno y aportar soluciones sostenibles a espacios de alta complejidad.
                         </p>
                         <Link
                             to="/contacto"
-                            className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] font-medium group hover:underline underline-offset-8 decoration-gray-400 transition-all duration-300"
+                            className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] font-medium border-b border-black pb-2 hover:text-gray-400 hover:border-gray-400 transition-all group"
                         >
                             <span>Contacta con nosotros</span>
-                            <span className="text-sm transition-transform group-hover:translate-x-1">→</span>
+                            <span className="inline-block transform group-hover:translate-x-1 transition-transform font-sans">→</span>
                         </Link>
                     </div>
                 </div>
 
                 <div className="mt-40 grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
                     <div className="md:col-span-4">
-                        <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-4">Responsabilidad</h3>
-                        <p className="font-light text-sm text-gray-600">
+                        <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-6">Responsabilidad</h3>
+                        <p className="font-light text-sm text-gray-600 leading-relaxed">
                             Entendemos nuestra actividad como una forma de cuidado. Cada planta es un compromiso
                             con la biodiversidad y el bienestar emocional de quienes las reciben.
                         </p>
                     </div>
                     <div className="md:col-span-4">
-                        <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-4">Sostenibilidad</h3>
-                        <p className="font-light text-sm text-gray-600">
+                        <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-6">Sostenibilidad</h3>
+                        <p className="font-light text-sm text-gray-600 leading-relaxed">
                             Cuidamos cada detalle del proceso, desde la selección en origen hasta
                             el envase final, minimizando nuestro impacto ambiental.
                         </p>
                     </div>
                     <div className="md:col-span-4">
-                        <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-4">Curaduría</h3>
-                        <p className="font-light text-sm text-gray-600">
+                        <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-6">Curaduría</h3>
+                        <p className="font-light text-sm text-gray-600 leading-relaxed">
                             Cada planta es seleccionada individualmente por su salud, estética
                             y capacidad de adaptación a los hogares modernos.
                         </p>
