@@ -50,7 +50,7 @@ export default function Home() {
     <>
       <NavBar />
       <Hero />
-      <div className="py-24 px-6 max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div className="py-12 md:py-24 px-6 max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div className="pl-2 md:col-start-2">
           <h1 className="text-3xl md:text-4xl font-medium mb-6 leading-tight">
             Cultivando momentos de tranquilidad y belleza natural.
@@ -63,8 +63,8 @@ export default function Home() {
 
 
 
-      <div className="pt-0 pb-32 px-6 max-w-[1400px] mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 px-2 gap-8">
+      <div className="pt-0 pb-16 md:pb-32 px-6 max-w-[1400px] mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-16 px-2 gap-8">
           <div>
             <h1 className="text-left text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] mb-4">
               Catálogo
@@ -107,7 +107,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <div className="py-24 px-6 max-w-[1400px] mx-auto border-t border-gray-100">
+      <div className="py-12 md:py-24 px-6 max-w-[1400px] mx-auto border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-start">
           <div className="md:col-span-7 overflow-hidden bg-[#ede3ca] aspect-[4/3] relative">
             <img
@@ -137,8 +137,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div id="categories" className="py-24 px-6 max-w-[1400px] mx-auto border-t border-gray-100">
-        <div className="mb-16">
+      <div id="categories" className="py-12 md:py-24 px-6 max-w-[1400px] mx-auto border-t border-gray-100">
+        <div className="mb-8 md:mb-16">
           <h1 className="text-left text-xl md:text-2xl font-medium uppercase tracking-[0.2em] mb-4 pl-2">
             Categorías
           </h1>
@@ -171,7 +171,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="py-24 px-6 max-w-[1400px] mx-auto">
+      <div className="py-12 md:py-24 px-6 max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-4 flex flex-col justify-center h-full order-2 md:order-1">
             <h3 className="text-xs uppercase tracking-[0.3em] text-gray-400 font-medium mb-6">El Proceso</h3>
@@ -207,7 +207,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="py-24 px-6 max-w-[1400px] mx-auto border-t border-gray-100">
+      <div className="py-12 md:py-24 px-6 max-w-[1400px] mx-auto border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-start">
           <div className="w-full md:col-span-7 h-full min-h-[300px] bg-gray-200 relative aspect-[4/3] overflow-hidden">
             <iframe

@@ -130,8 +130,8 @@ export default function ProductDetail() {
 
             {/* Related Products Section */}
             {relatedProducts.length > 0 && (
-                <div className="py-24 px-6 max-w-[1400px] mx-auto border-t border-gray-100">
-                    <div className="mb-16 px-2">
+                <div className="py-12 md:py-24 px-6 max-w-[1400px] mx-auto border-t border-gray-100">
+                    <div className="mb-8 md:mb-16 px-2">
                         <h2 className="text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] mb-4">
                             Relacionados
                         </h2>
