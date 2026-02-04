@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCart } from "../pages/CartContext";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -11,8 +11,12 @@ export default function ProductDetail() {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
+    const [relatedProducts, setRelatedProducts] = useState([]);
 
     useEffect(() => {
+        setLoading(true);
+        window.scrollTo(0, 0);
+
         fetch(`/api/products/${id}`)
             .then((res) => {
                 if (!res.ok) throw new Error("Product not found");
@@ -21,30 +25,38 @@ export default function ProductDetail() {
             .then((data) => {
                 const item = data.data || data;
                 setProduct(item);
+
+                // Fetch related products
+                fetch("/api/products")
+                    .then(res => res.json())
+                    .then(allData => {
+                        const items = allData.data || allData;
+                        if (Array.isArray(items)) {
+                            const related = items.filter(p =>
+                                p.categoria === item.categoria && p._id !== id
+                            );
+                            setRelatedProducts(related);
+                        }
+                    })
+                    .catch(err => console.error("Error fetching related products:", err));
+
                 setLoading(false);
             })
             .catch((err) => {
                 console.error("Error fetching product:", err);
-                fetch("/api/products")
-                    .then(res => res.json())
-                    .then(data => {
-                        const found = data.data?.find(p => p._id === id);
-                        if (found) setProduct(found);
-                        setLoading(false);
-                    })
-                    .catch(e => setLoading(false));
+                setLoading(false);
             });
     }, [id]);
 
-    if (loading) return <div className="p-10 text-center">Cargando...</div>;
-    if (!product) return <div className="p-10 text-center">Producto no encontrado</div>;
+    if (loading) return <div className="p-10 text-center py-40">Cargando...</div>;
+    if (!product) return <div className="p-10 text-center py-40">Producto no encontrado</div>;
 
     return (
         <>
             <NavBar />
-            <div className="flex flex-col md:flex-row pt-16 md:pt-24 min-h-[calc(100vh)]">
-
-                <div className="w-full md:w-1/2 bg-[#ede3ca] flex items-center justify-center p-12 md:p-20 relative">
+            <div className="flex flex-col md:flex-row min-h-[calc(100vh)]">
+                {/* Product Section */}
+                <div className="w-full md:w-1/2 bg-[#ede3ca] flex items-center justify-center p-12 md:p-20 relative pt-24 md:pt-32">
                     <img
                         src={product.imatge}
                         alt={product.nom}
@@ -52,7 +64,7 @@ export default function ProductDetail() {
                     />
                 </div>
 
-                <div className="w-full md:w-1/2 p-8 md:p-20 flex flex-col bg-white justify-center">
+                <div className="w-full md:w-1/2 p-8 md:p-20 flex flex-col bg-white justify-center pt-24 md:pt-40">
                     <button
                         onClick={() => navigate(-1)}
                         className="mb-12 text-gray-400 hover:text-black flex items-center gap-2 self-start uppercase text-[10px] tracking-[0.3em] font-medium transition-colors border-b border-transparent hover:border-black pb-1"
@@ -60,18 +72,20 @@ export default function ProductDetail() {
                         ← Volver
                     </button>
 
-                    <h1 className="text-4xl md:text-5xl font-medium uppercase tracking-[0.2em] mb-16 text-gray-900 leading-tight">
+                    <h1 className="text-3xl md:text-4xl font-medium uppercase tracking-[0.2em] mb-16 text-gray-900 leading-tight">
                         {product.nom}
                     </h1>
 
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16 border-t border-gray-100 pt-10">
-                        <div>
-                            <span className="block text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-2 font-medium">Precio</span>
-                            <span className="text-2xl font-light text-gray-900">{product.preu} €</span>
-                        </div>
-                        <div>
-                            <span className="block text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-2 font-medium">Categoría</span>
-                            <span className="text-base text-gray-700 uppercase tracking-widest">{product.categoria}</span>
+                        <div className="md:col-span-4 flex flex-col gap-12">
+                            <div>
+                                <span className="block text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-2 font-medium">Precio</span>
+                                <span className="text-2xl font-light text-gray-900">{product.preu} €</span>
+                            </div>
+                            <div>
+                                <span className="block text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-2 font-medium">Categoría</span>
+                                <span className="text-base text-gray-700 uppercase tracking-widest">{product.categoria}</span>
+                            </div>
                         </div>
 
                         <div className="md:col-span-8">
@@ -113,6 +127,46 @@ export default function ProductDetail() {
                     </div>
                 </div>
             </div>
+
+            {/* Related Products Section */}
+            {relatedProducts.length > 0 && (
+                <div className="py-24 px-6 max-w-[1400px] mx-auto border-t border-gray-100">
+                    <div className="mb-16 px-2">
+                        <h2 className="text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] mb-4">
+                            Relacionados
+                        </h2>
+                        <p className="text-gray-500 font-light max-w-xl text-lg leading-relaxed">
+                            Otros artículos de la categoría {product.categoria} que podrían interesarte.
+                        </p>
+                    </div>
+
+                    <div className="flex overflow-x-auto gap-8 pb-12 no-scrollbar snap-x px-2">
+                        {relatedProducts.map((p) => (
+                            <div key={p._id} className="flex-shrink-0 w-[75%] sm:w-[45%] lg:w-[23%] snap-start">
+                                <Link
+                                    to={`/producto/${p._id}`}
+                                    className="group w-full flex flex-col cursor-pointer text-black no-underline"
+                                >
+                                    <div className="relative overflow-hidden bg-[#ede3ca] aspect-[3/4] mb-6">
+                                        <img
+                                            src={p.imatge}
+                                            alt={p.nom}
+                                            className="w-full h-full object-contain p-8 mix-blend-multiply"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col items-start text-left gap-2 pl-2">
+                                        <p className="text-xs text-gray-400 uppercase tracking-widest">{p.categoria}</p>
+                                        <h3 className="text-lg font-medium tracking-wide hover:underline decoration-gray-900 underline-offset-4">
+                                            {p.nom}
+                                        </h3>
+                                        <p className="text-base font-light text-gray-900 mt-1">{p.preu} €</p>
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
             <Footer />
         </>
     );

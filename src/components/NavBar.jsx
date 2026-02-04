@@ -93,22 +93,30 @@ export default function NavBar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > lastScrollY) {
-                // Scrolling down
-                setIsVisible(false);
-            } else {
-                // Scrolling up
+            const currentScrollY = window.scrollY;
+            const scrollDelta = currentScrollY - lastScrollY;
+            const threshold = 80; // Pixels from top where navbar always stays visible
+
+            if (currentScrollY <= threshold) {
                 setIsVisible(true);
+            } else if (Math.abs(scrollDelta) > 10) { // Minimum scroll distance to trigger
+                if (scrollDelta > 0) {
+                    // Scrolling down
+                    setIsVisible(false);
+                } else {
+                    // Scrolling up
+                    setIsVisible(true);
+                }
             }
-            setLastScrollY(window.scrollY);
+            setLastScrollY(currentScrollY);
         };
 
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, [lastScrollY]);
 
     return (
-        <header className={`fixed top-0 left-0 w-full border-b border-gray-200 z-50 bg-white transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
+        <header className={`fixed top-0 left-0 w-full border-b border-gray-200 z-50 bg-white transition-transform duration-500 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
             {/* Desktop Menu */}
             <div className="hidden lg:flex justify-center items-center p-3 relative bg-white shadow">
                 <div className="absolute left-10 flex gap-6 items-center">
