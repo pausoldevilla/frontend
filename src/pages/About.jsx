@@ -23,9 +23,7 @@ export default function About() {
                     </div>
                     <div className="md:col-span-8">
                         <p className="text-xl md:text-2xl font-light leading-relaxed text-gray-700 max-w-2xl">
-                            Soldevilla es un estudio de paisajismo y curaduría botánica con sede en Sabadell.
-                            A través de un enfoque técnico y estético, diseñamos ecosistemas que trascienden
-                            lo ornamental para convertirse en parte esencial de la experiencia arquitectónica.
+                            En nuestro vivero, creemos que cada planta cuenta una historia. Nos dedicamos a seleccionar meticulosamente los mejores ejemplares para que puedas crear espacios llenos de vida y armonía. Ya sea que busques purificar el aire de tu oficina o dar un toque vibrante a tu jardín, nuestra pasión es conectarte con la naturaleza de la forma más pura y sencilla.
                         </p>
                     </div>
                 </div>

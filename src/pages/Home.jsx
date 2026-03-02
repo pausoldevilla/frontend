@@ -50,16 +50,7 @@ export default function Home() {
     <>
       <NavBar />
       <Hero />
-      <div className="py-10 md:py-24 px-6 max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-        <div className="pl-2 md:col-start-2">
-          <h1 className="text-3xl md:text-4xl font-medium mb-6 leading-tight">
-            Cultivando momentos de tranquilidad y belleza natural.
-          </h1>
-          <p className="text-gray-600 leading-relaxed font-light text-lg">
-            En nuestro vivero, creemos que cada planta cuenta una historia. Nos dedicamos a seleccionar meticulosamente los mejores ejemplares para que puedas crear espacios llenos de vida y armonía. Ya sea que busques purificar el aire de tu oficina o dar un toque vibrante a tu jardín, nuestra pasión es conectarte con la naturaleza de la forma más pura y sencilla.
-          </p>
-        </div>
-      </div>
+
 
 
 

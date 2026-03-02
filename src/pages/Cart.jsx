@@ -97,7 +97,10 @@ export default function Cart() {
                                     <span className="text-base uppercase tracking-widest font-medium">Total</span>
                                     <span className="text-2xl font-light">{getCartTotal().toFixed(2)} €</span>
                                 </div>
-                                <button className="w-full bg-gray-900 text-white py-5 hover:bg-black transition-all text-[11px] uppercase tracking-[0.3em] font-medium">
+                                <button
+                                    onClick={() => navigate('/checkout')}
+                                    className="w-full bg-gray-900 text-white py-5 hover:bg-black transition-all text-[11px] uppercase tracking-[0.3em] font-medium"
+                                >
                                     Tramitar Pedido
                                 </button>
                             </div>

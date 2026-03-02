@@ -17,6 +17,7 @@ import SearchPage from './pages/SearchPage.jsx';
 import About from './pages/About.jsx';
 import Jardines from './pages/Jardines.jsx';
 import Shop from './pages/Shop.jsx';
+import Checkout from './pages/Checkout.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -36,6 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="categoria/:categoryName" element={<CategoryPage />} />
             <Route path="search" element={<SearchPage />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="checkout" element={<Checkout />} />
           </Route>
         </Routes>
       </BrowserRouter>
