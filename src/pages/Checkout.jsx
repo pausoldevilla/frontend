@@ -100,8 +100,60 @@ export default function Checkout() {
         return true;
     };
 
-    const nextStep = () => {
+    // Guarda el pedido en la base de datos después de completar el paso de envío
+    const saveOrderToDb = async () => {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            navigate('/login');
+            return false;
+        }
+
+        const orderData = {
+            productes: cartItems.map(item => ({
+                producte: item._id,
+                nom: item.nom,
+                quantitat: item.quantity,
+                preuUnitari: item.preu,
+                imatge: item.imatge
+            })),
+            adreca: shipping,
+            total: getCartTotal()
+        };
+
+        try {
+            setIsSubmitting(true);
+            const res = await fetch(API_COMANDES_URL, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderData)
+            });
+
+            if (!res.ok) {
+                const errData = await res.json();
+                throw new Error(errData.message || 'Error al guardar el pedido');
+            }
+
+            const result = await res.json();
+            setOrderId(result.data._id);
+            return true;
+        } catch (err) {
+            setError(err.message);
+            return false;
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const nextStep = async () => {
         if (validateStep()) {
+            // Guardar el pedido al pasar del paso de envío al de pago
+            if (currentStep === 0 && !orderId) {
+                const saved = await saveOrderToDb();
+                if (!saved) return;
+            }
             setCurrentStep(prev => prev + 1);
         }
     };
@@ -121,36 +173,26 @@ export default function Checkout() {
             return;
         }
 
-        const orderData = {
-            productes: cartItems.map(item => ({
-                producte: item._id,
-                nom: item.nom,
-                quantitat: item.quantity,
-                preuUnitari: item.preu,
-                imatge: item.imatge
-            })),
-            adreca: shipping,
+        const updateData = {
             metodePagament: payment.metode,
-            total: getCartTotal()
+            estat: 'pendent'
         };
 
         try {
-            const res = await fetch(API_COMANDES_URL, {
-                method: 'POST',
+            const res = await fetch(`${API_COMANDES_URL}/${orderId}`, {
+                method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(orderData)
+                body: JSON.stringify(updateData)
             });
 
             if (!res.ok) {
                 const errData = await res.json();
-                throw new Error(errData.message || 'Error al crear el pedido');
+                throw new Error(errData.message || 'Error al confirmar el pedido');
             }
 
-            const result = await res.json();
-            setOrderId(result.data._id);
             setOrderSuccess(true);
             clearCart();
         } catch (err) {
