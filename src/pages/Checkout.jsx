@@ -1,22 +1,25 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
 import { useCart } from '../pages/CartContext';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 
 const API_PROFILE_URL = 'http://localhost:3000/api/usuari/perfil';
-const API_COMANDES_URL = 'http://localhost:3000/api/comandes';
+const API_CHECKOUT_SESSION_URL = 'http://localhost:3000/api/checkout/create-session';
 
-const STEPS = ['Envío', 'Pago', 'Confirmación'];
+// Inicialitzem Stripe fora del component
+// FIXME: Substituir per la clau pública real de Stripe
+const stripePromise = loadStripe('pk_test_51...FIXME_INSERT_YOUR_PUBLIC_KEY_HERE');
+
+const STEPS = ['Envío', 'Revisión'];
 
 export default function Checkout() {
     const navigate = useNavigate();
-    const { cartItems, getCartTotal, clearCart } = useCart();
+    const { cartItems, getCartTotal } = useCart();
 
     const [currentStep, setCurrentStep] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [orderSuccess, setOrderSuccess] = useState(false);
-    const [orderId, setOrderId] = useState(null);
     const [error, setError] = useState('');
 
     // Shipping form
@@ -28,14 +31,6 @@ export default function Checkout() {
         pais: 'España'
     });
 
-    // Payment form
-    const [payment, setPayment] = useState({
-        metode: 'targeta',
-        numeroTargeta: '',
-        caducitat: '',
-        cvv: ''
-    });
-
     // Pre-fill from user profile
     useEffect(() => {
         const token = localStorage.getItem('authToken');
@@ -43,7 +38,7 @@ export default function Checkout() {
             navigate('/login');
             return;
         }
-        if (cartItems.length === 0 && !orderSuccess) {
+        if (cartItems.length === 0) {
             navigate('/cart');
             return;
         }
@@ -73,14 +68,10 @@ export default function Checkout() {
             }
         };
         fetchProfile();
-    }, [navigate, cartItems.length, orderSuccess]);
+    }, [navigate, cartItems.length]);
 
     const handleShippingChange = (field, value) => {
         setShipping(prev => ({ ...prev, [field]: value }));
-    };
-
-    const handlePaymentChange = (field, value) => {
-        setPayment(prev => ({ ...prev, [field]: value }));
     };
 
     const validateStep = () => {
@@ -91,69 +82,11 @@ export default function Checkout() {
                 return false;
             }
         }
-        if (currentStep === 1) {
-            if (!payment.numeroTargeta || !payment.caducitat || !payment.cvv) {
-                setError('Por favor, completa todos los datos de la tarjeta.');
-                return false;
-            }
-        }
         return true;
     };
 
-    // Guarda el pedido en la base de datos después de completar el paso de envío
-    const saveOrderToDb = async () => {
-        const token = localStorage.getItem('authToken');
-        if (!token) {
-            navigate('/login');
-            return false;
-        }
-
-        const orderData = {
-            productes: cartItems.map(item => ({
-                producte: item._id,
-                nom: item.nom,
-                quantitat: item.quantity,
-                preuUnitari: item.preu,
-                imatge: item.imatge
-            })),
-            adreca: shipping,
-            total: getCartTotal()
-        };
-
-        try {
-            setIsSubmitting(true);
-            const res = await fetch(API_COMANDES_URL, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(orderData)
-            });
-
-            if (!res.ok) {
-                const errData = await res.json();
-                throw new Error(errData.message || 'Error al guardar el pedido');
-            }
-
-            const result = await res.json();
-            setOrderId(result.data._id);
-            return true;
-        } catch (err) {
-            setError(err.message);
-            return false;
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
-
-    const nextStep = async () => {
+    const nextStep = () => {
         if (validateStep()) {
-            // Guardar el pedido al pasar del paso de envío al de pago
-            if (currentStep === 0 && !orderId) {
-                const saved = await saveOrderToDb();
-                if (!saved) return;
-            }
             setCurrentStep(prev => prev + 1);
         }
     };
@@ -173,28 +106,43 @@ export default function Checkout() {
             return;
         }
 
-        const updateData = {
-            metodePagament: payment.metode,
-            estat: 'pendent'
-        };
-
         try {
-            const res = await fetch(`${API_COMANDES_URL}/${orderId}`, {
-                method: 'PUT',
+            // 1. Cridar al backend per crear la sessió de Stripe
+            const res = await fetch(API_CHECKOUT_SESSION_URL, {
+                method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(updateData)
+                body: JSON.stringify({
+                    productes: cartItems.map(item => ({
+                        producte: item._id,
+                        nom: item.nom,
+                        quantitat: item.quantity,
+                        preuUnitari: item.preu,
+                        imatge: item.imatge
+                    })),
+                    adreca: shipping
+                })
             });
 
             if (!res.ok) {
                 const errData = await res.json();
-                throw new Error(errData.message || 'Error al confirmar el pedido');
+                throw new Error(errData.message || 'Error al crear la sessió de pagament');
             }
 
-            setOrderSuccess(true);
-            clearCart();
+            const { id } = await res.json();
+
+            // 2. Redirigir a Stripe Checkout
+            const stripe = await stripePromise;
+            const { error: stripeError } = await stripe.redirectToCheckout({
+                sessionId: id
+            });
+
+            if (stripeError) {
+                throw new Error(stripeError.message);
+            }
+
         } catch (err) {
             setError(err.message);
         } finally {
@@ -202,47 +150,6 @@ export default function Checkout() {
         }
     };
 
-    // ── Success Screen ──
-    if (orderSuccess) {
-        return (
-            <>
-                <NavBar />
-                <div className="pt-32 pb-10 px-6 max-w-[700px] mx-auto min-h-screen text-center">
-                    <div className="mb-8">
-                        <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-8">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                        </div>
-                        <h1 className="text-2xl md:text-3xl font-medium uppercase tracking-[0.2em] mb-4">Pedido Confirmado</h1>
-                        <p className="text-gray-500 font-light mb-2">Gracias por tu compra. Te hemos enviado un email con los detalles.</p>
-                        {orderId && (
-                            <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-medium mt-6">
-                                Nº Pedido: <span className="text-gray-700">{orderId}</span>
-                            </p>
-                        )}
-                    </div>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
-                        <Link
-                            to="/"
-                            className="bg-gray-900 text-white py-4 px-10 hover:bg-black transition-all text-[11px] uppercase tracking-[0.3em] font-medium text-center"
-                        >
-                            Volver al Inicio
-                        </Link>
-                        <Link
-                            to="/tienda"
-                            className="border border-gray-900 text-gray-900 py-4 px-10 hover:bg-gray-50 transition-all text-[11px] uppercase tracking-[0.3em] font-medium text-center"
-                        >
-                            Seguir Comprando
-                        </Link>
-                    </div>
-                </div>
-                <Footer />
-            </>
-        );
-    }
-
-    // ── Main Checkout ──
     return (
         <>
             <NavBar />
@@ -353,131 +260,16 @@ export default function Checkout() {
                                     onClick={nextStep}
                                     className="mt-10 w-full bg-gray-900 text-white py-5 hover:bg-black transition-all text-[11px] uppercase tracking-[0.3em] font-medium"
                                 >
-                                    Continuar al Pago
+                                    Revisar Pedido
                                 </button>
                             </div>
                         )}
 
-                        {/* Step 2: Pago */}
+                        {/* Step 2: Revisión */}
                         {currentStep === 1 && (
                             <div>
-                                <h2 className="text-[11px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-8">Método de Pago</h2>
+                                <h2 className="text-[11px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-8">Confirmar Detalls</h2>
 
-                                <div className="mb-10 w-full max-w-sm mx-auto">
-                                    <div className="w-full aspect-[1.586/1] bg-gradient-to-br from-gray-900 to-black rounded-xl p-6 flex flex-col justify-between text-white shadow-xl relative overflow-hidden">
-                                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
-                                        <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/5 rounded-full blur-2xl -ml-10 -mb-10 pointer-events-none"></div>
-
-                                        <div className="flex justify-between items-start relative z-10 opacity-80 h-8">
-                                            <div className="w-10 h-7 bg-gray-300 rounded flex items-center justify-center backdrop-blur-sm overflow-hidden border border-gray-400/30">
-                                                <div className="w-full h-[60%] border-t border-b border-gray-500/30"></div>
-                                            </div>
-                                            <div className="text-right">
-                                                <span className="text-[10px] uppercase tracking-widest opacity-60">PAGO SEGURO</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="mt-auto mb-5 relative z-10">
-                                            <div className="text-xl sm:text-2xl font-mono tracking-[0.15em] sm:tracking-[0.2em] text-gray-100 min-h-[2rem]">
-                                                {payment.numeroTargeta || '•••• •••• •••• ••••'}
-                                            </div>
-                                        </div>
-
-                                        <div className="flex justify-between relative z-10">
-                                            <div className="flex flex-col">
-                                                <span className="text-[8px] uppercase tracking-widest text-gray-400 mb-1">Titular</span>
-                                                <span className="text-xs sm:text-sm font-medium tracking-widest uppercase truncate max-w-[150px] min-h-[1.25rem]">
-                                                    {shipping.nom || 'NOMBRE APELLIDOS'}
-                                                </span>
-                                            </div>
-                                            <div className="flex gap-4 sm:gap-6 text-right">
-                                                <div className="flex flex-col">
-                                                    <span className="text-[8px] uppercase tracking-widest text-gray-400 mb-1">Caducidad</span>
-                                                    <span className="text-xs sm:text-sm font-mono tracking-widest min-h-[1.25rem]">{payment.caducitat || 'MM/AA'}</span>
-                                                </div>
-                                                <div className="flex flex-col">
-                                                    <span className="text-[8px] uppercase tracking-widest text-gray-400 mb-1">CVV</span>
-                                                    <span className="text-xs sm:text-sm font-mono tracking-widest min-h-[1.25rem]">{payment.cvv || '•••'}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-6">
-                                    <div>
-                                        <label className="block text-[10px] uppercase tracking-[0.2em] text-gray-400 font-medium mb-2">Número de Tarjeta</label>
-                                        <input
-                                            type="text"
-                                            value={payment.numeroTargeta}
-                                            onChange={(e) => {
-                                                let val = e.target.value.replace(/\D/g, '');
-                                                let formatted = val.match(/.{1,4}/g)?.join(' ') || '';
-                                                handlePaymentChange('numeroTargeta', formatted.substring(0, 19));
-                                            }}
-                                            className="w-full px-4 py-3 border border-gray-200 focus:border-gray-900 outline-none transition-colors text-sm font-mono tracking-widest"
-                                            placeholder="0000 0000 0000 0000"
-                                            maxLength={19}
-                                        />
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-6">
-                                        <div>
-                                            <label className="block text-[10px] uppercase tracking-[0.2em] text-gray-400 font-medium mb-2">Caducidad</label>
-                                            <input
-                                                type="text"
-                                                value={payment.caducitat}
-                                                onChange={(e) => {
-                                                    let val = e.target.value.replace(/\D/g, '');
-                                                    if (val.length >= 3) {
-                                                        val = val.substring(0, 2) + '/' + val.substring(2, 4);
-                                                    }
-                                                    handlePaymentChange('caducitat', val);
-                                                }}
-                                                className="w-full px-4 py-3 border border-gray-200 focus:border-gray-900 outline-none transition-colors text-sm font-mono tracking-widest"
-                                                placeholder="MM/AA"
-                                                maxLength={5}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-[10px] uppercase tracking-[0.2em] text-gray-400 font-medium mb-2">CVV</label>
-                                            <input
-                                                type="text"
-                                                value={payment.cvv}
-                                                onChange={(e) => {
-                                                    let val = e.target.value.replace(/\D/g, '');
-                                                    handlePaymentChange('cvv', val.substring(0, 4));
-                                                }}
-                                                className="w-full px-4 py-3 border border-gray-200 focus:border-gray-900 outline-none transition-colors text-sm font-mono tracking-widest"
-                                                placeholder="000"
-                                                maxLength={4}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="flex gap-4 mt-10">
-                                    <button
-                                        onClick={prevStep}
-                                        className="flex-1 border border-gray-200 text-gray-600 py-5 hover:border-gray-400 transition-all text-[11px] uppercase tracking-[0.3em] font-medium"
-                                    >
-                                        Atrás
-                                    </button>
-                                    <button
-                                        onClick={nextStep}
-                                        className="flex-1 bg-gray-900 text-white py-5 hover:bg-black transition-all text-[11px] uppercase tracking-[0.3em] font-medium"
-                                    >
-                                        Revisar Pedido
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Step 3: Confirmación */}
-                        {currentStep === 2 && (
-                            <div>
-                                <h2 className="text-[11px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-8">Confirmar Pedido</h2>
-
-                                {/* Shipping Summary */}
                                 <div className="mb-8">
                                     <div className="flex justify-between items-center mb-4">
                                         <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-medium">Dirección de Envío</p>
@@ -493,25 +285,6 @@ export default function Checkout() {
                                     </div>
                                 </div>
 
-                                {/* Payment Summary */}
-                                <div className="mb-8">
-                                    <div className="flex justify-between items-center mb-4">
-                                        <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-medium">Método de Pago</p>
-                                        <button onClick={() => setCurrentStep(1)} className="text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-gray-900 transition-colors underline underline-offset-4">
-                                            Editar
-                                        </button>
-                                    </div>
-                                    <div className="bg-white border border-gray-100 p-6">
-                                        <p className="text-sm font-medium capitalize">Tarjeta de crédito/débito</p>
-                                        {payment.numeroTargeta && (
-                                            <p className="text-sm font-light text-gray-600 mt-1">
-                                                •••• •••• •••• {payment.numeroTargeta.slice(-4)}
-                                            </p>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Products list */}
                                 <div className="mb-8">
                                     <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-medium mb-4">Productos</p>
                                     <div className="border-t border-gray-100">
@@ -542,7 +315,7 @@ export default function Checkout() {
                                         disabled={isSubmitting}
                                         className="flex-1 bg-gray-900 text-white py-5 hover:bg-black transition-all text-[11px] uppercase tracking-[0.3em] font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
-                                        {isSubmitting ? 'Procesando...' : 'Confirmar Pedido'}
+                                        {isSubmitting ? 'Procesando...' : 'Ir al Pago (Stripe)'}
                                     </button>
                                 </div>
                             </div>
