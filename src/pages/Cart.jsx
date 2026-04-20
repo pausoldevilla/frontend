@@ -4,6 +4,7 @@ import { useCart } from "../pages/CartContext";
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 
+// Sessió 17 - Exercici 4.1: Flux de checkout (frontend)
 export default function Cart() {
     const navigate = useNavigate();
     const { cartItems, removeFromCart, clearCart, getCartTotal, updateQuantity } = useCart();

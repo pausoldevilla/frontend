@@ -38,6 +38,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="producto/:id" element={<ProductDetail />} />
             <Route path="categoria/:categoryName" element={<CategoryPage />} />
             <Route path="search" element={<SearchPage />} />
+            {/* Sessió 17 - Exercici 4.1: Flux de checkout (frontend) */}
             <Route path="cart" element={<Cart />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="checkout/success" element={<Success />} />

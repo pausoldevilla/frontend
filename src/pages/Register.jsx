@@ -22,7 +22,7 @@ export default function Register() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const API_URL = 'http://localhost:3000/api/usuari/registro';
+    const API_URL = 'http://localhost:3000/api/auth/register';
 
     const handleSubmit = async (e) => {
         e.preventDefault();

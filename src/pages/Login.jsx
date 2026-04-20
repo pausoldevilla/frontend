@@ -12,7 +12,7 @@ export default function Login() {
     setError('');
 
     try {
-      const API_URL = 'http://localhost:3000/api/usuari/login';
+      const API_URL = 'http://localhost:3000/api/auth/login';
 
       const response = await fetch(API_URL, {
         method: 'POST',

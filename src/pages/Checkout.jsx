@@ -8,12 +8,12 @@ import Footer from '../components/Footer';
 const API_PROFILE_URL = 'http://localhost:3000/api/usuari/perfil';
 const API_CHECKOUT_SESSION_URL = 'http://localhost:3000/api/checkout/create-session';
 
-// Inicialitzem Stripe fora del component
-// FIXME: Substituir per la clau pública real de Stripe
-const stripePromise = loadStripe('pk_test_51...FIXME_INSERT_YOUR_PUBLIC_KEY_HERE');
+// Sessió 17 - Exercici 4.7: Sandbox i test de pagaments
+const stripePromise = loadStripe('pk_test_51TOCr4PYnXttZqNE5lGSG8blPCrogcOOOyp64th2qeVq6TdJPpgfQqzZmvkyNlxv1xWn337sJMmHJobttLBEoblh00eRW3ka8p');
 
 const STEPS = ['Envío', 'Revisión'];
 
+// Sessió 17 - Exercici 4.1: Flux de checkout (frontend)
 export default function Checkout() {
     const navigate = useNavigate();
     const { cartItems, getCartTotal } = useCart();
@@ -22,7 +22,7 @@ export default function Checkout() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
 
-    // Shipping form
+    // formulari d'enviament
     const [shipping, setShipping] = useState({
         nom: '',
         carrer: '',
@@ -31,7 +31,7 @@ export default function Checkout() {
         pais: 'España'
     });
 
-    // Pre-fill from user profile
+    // dades del perfil
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         if (!token) {
@@ -107,7 +107,7 @@ export default function Checkout() {
         }
 
         try {
-            // 1. Cridar al backend per crear la sessió de Stripe
+            // Sessió 17 - Exercici 4.2: Creació de comanda al backend
             const res = await fetch(API_CHECKOUT_SESSION_URL, {
                 method: 'POST',
                 headers: {
@@ -131,16 +131,14 @@ export default function Checkout() {
                 throw new Error(errData.message || 'Error al crear la sessió de pagament');
             }
 
-            const { id } = await res.json();
+            const { url } = await res.json();
 
-            // 2. Redirigir a Stripe Checkout
-            const stripe = await stripePromise;
-            const { error: stripeError } = await stripe.redirectToCheckout({
-                sessionId: id
-            });
-
-            if (stripeError) {
-                throw new Error(stripeError.message);
+            // Sessió 17 - Exercici 4.4: Integració amb Stripe (frontend)
+            // NOTA: redirectToCheckout està obsolet, ara es redirigeix directament a la URL de la sessió
+            if (url) {
+                window.location.href = url;
+            } else {
+                throw new Error('No s\'ha rebut la URL de pagament');
             }
 
         } catch (err) {

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 
+// Sessió 17 - Exercici 4.1: Flux de checkout (frontend)
 export default function Success() {
     return (
         <>
