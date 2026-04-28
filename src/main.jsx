@@ -17,6 +17,9 @@ import SearchPage from './pages/SearchPage.jsx';
 import About from './pages/About.jsx';
 import Jardines from './pages/Jardines.jsx';
 import Shop from './pages/Shop.jsx';
+import UserDashboard from './pages/UserDashboard.jsx';
+import AdminDashboard from './pages/AdminDashboard.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Checkout from './pages/Checkout.jsx';
 import Success from './pages/Success.jsx';
 import Cancel from './pages/Cancel.jsx';
@@ -30,7 +33,21 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            <Route path="account" element={<Account />} />
+            
+            {/* User Dashboard */}
+            <Route path="account" element={
+              <ProtectedRoute>
+                <UserDashboard />
+              </ProtectedRoute>
+            } />
+            
+            {/* Admin Dashboard */}
+            <Route path="admin" element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } />
+
             <Route path="contacto" element={<Contact />} />
             <Route path="acerca" element={<About />} />
             <Route path="paisajismo" element={<Jardines />} />

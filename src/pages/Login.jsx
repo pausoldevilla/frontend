@@ -38,6 +38,7 @@ export default function Login() {
       }
 
       localStorage.setItem('authToken', authToken);
+      localStorage.setItem('currentUserData', JSON.stringify(loginData.usuari));
 
       navigate('/');
 
