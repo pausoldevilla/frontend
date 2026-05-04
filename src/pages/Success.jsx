@@ -50,13 +50,13 @@ export default function Success() {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
                     <Link
-                        to="/dashboard"
+                        to="/account"
                         className="bg-gray-900 text-white py-4 px-10 hover:bg-black transition-all text-[11px] uppercase tracking-[0.3em] font-medium text-center"
                     >
                         Veure les meves Comandes
                     </Link>
                     <Link
-                        to="/shop"
+                        to="/tienda"
                         className="border border-gray-900 text-gray-900 py-4 px-10 hover:bg-gray-50 transition-all text-[11px] uppercase tracking-[0.3em] font-medium text-center"
                     >
                         Seguir Comprant
