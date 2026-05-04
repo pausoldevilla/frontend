@@ -7,9 +7,6 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
     const authToken = localStorage.getItem('authToken');
     const userData = JSON.parse(localStorage.getItem('currentUserData') || 'null');
 
-    // Se asume que el objeto userData guardado en localStorage tiene una propiedad 'rol'
-    // Si no está, podemos intentar obtenerlo de un contexto o volver a fetch.
-    // Pero por simplicidad en esta sesión, usaremos lo que hay en localStorage.
     
     if (!authToken) {
         // Redirigir a login si no hay token
