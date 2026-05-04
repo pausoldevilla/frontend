@@ -6,6 +6,26 @@ import Footer from "../components/Footer";
 const API_PROFILE_URL = 'http://localhost:3000/api/usuari/perfil';
 const API_ORDERS_URL = 'http://localhost:3000/api/comandes/user';
 
+const ESTAT_LABELS = {
+    pendent_pagament: 'Pendent pagament',
+    pendent: 'Pendent',
+    pagat: 'Pagat',
+    procesant: 'Procesant',
+    enviat: 'Enviat',
+    completat: 'Completat',
+    cancelat: 'Cancel·lat',
+};
+
+const ESTAT_COLORS = {
+    pendent_pagament: 'bg-red-100 text-red-600',
+    pendent: 'bg-yellow-100 text-yellow-700',
+    pagat: 'bg-green-100 text-green-700',
+    procesant: 'bg-blue-100 text-blue-700',
+    enviat: 'bg-indigo-100 text-indigo-700',
+    completat: 'bg-gray-100 text-gray-700',
+    cancelat: 'bg-gray-100 text-gray-400',
+};
+
 export default function UserDashboard() {
     const navigate = useNavigate();
 
@@ -58,7 +78,7 @@ export default function UserDashboard() {
         fetchData();
     }, [fetchData]);
 
-    if (isLoading) return <div className="p-20 text-center">Cargando dashboard...</div>;
+    if (isLoading) return <div className="p-20 text-center">Carregant dashboard...</div>;
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -66,11 +86,11 @@ export default function UserDashboard() {
             <div className="max-w-6xl mx-auto pt-32 pb-20 px-4">
                 <div className="flex justify-between items-end mb-12">
                     <div>
-                        <h1 className="text-3xl font-light uppercase tracking-widest mb-2">Mi Dashboard</h1>
-                        <p className="text-gray-500 text-sm">Bienvenido de nuevo, {userData?.nom}</p>
+                        <h1 className="text-3xl font-light uppercase tracking-widest mb-2">El meu Dashboard</h1>
+                        <p className="text-gray-500 text-sm">Benvingut de nou, {userData?.nom}</p>
                     </div>
                     <button onClick={handleLogout} className="text-[10px] uppercase tracking-widest border-b border-black pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors">
-                        Cerrar Sesión
+                        Tancar Sessió
                     </button>
                 </div>
 
@@ -78,10 +98,10 @@ export default function UserDashboard() {
                     {/* Perfil */}
                     <div className="lg:col-span-1 space-y-8">
                         <section>
-                            <h2 className="text-[11px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-6">Información Personal</h2>
+                            <h2 className="text-[11px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-6">Informació Personal</h2>
                             <div className="bg-white p-8 border border-gray-100 space-y-4">
                                 <div>
-                                    <span className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">Nombre</span>
+                                    <span className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">Nom</span>
                                     <span className="text-lg font-light">{userData?.titol} {userData?.nom}</span>
                                 </div>
                                 <div>
@@ -89,14 +109,14 @@ export default function UserDashboard() {
                                     <span className="text-lg font-light">{userData?.email}</span>
                                 </div>
                                 <div>
-                                    <span className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">Teléfono</span>
-                                    <span className="text-lg font-light">{userData?.telefon || 'No especificado'}</span>
+                                    <span className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">Telèfon</span>
+                                    <span className="text-lg font-light">{userData?.telefon || 'No especificat'}</span>
                                 </div>
                             </div>
                         </section>
 
                         <section>
-                            <h2 className="text-[11px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-6">Dirección de Envío</h2>
+                            <h2 className="text-[11px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-6">Adreça d'Enviament</h2>
                             <div className="bg-white p-8 border border-gray-100">
                                 {userData?.adreca ? (
                                     <p className="font-light leading-relaxed">
@@ -105,7 +125,7 @@ export default function UserDashboard() {
                                         {userData.adreca.pais}
                                     </p>
                                 ) : (
-                                    <p className="text-gray-400 italic">No hay dirección guardada</p>
+                                    <p className="text-gray-400 italic">No hi ha adreça guardada</p>
                                 )}
                             </div>
                         </section>
@@ -113,31 +133,31 @@ export default function UserDashboard() {
 
                     {/* Pedidos */}
                     <div className="lg:col-span-2">
-                        <h2 className="text-[11px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-6">Mis Pedidos</h2>
+                        <h2 className="text-[11px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-6">Les meves Comandes</h2>
                         <div className="bg-white border border-gray-100 overflow-hidden">
                             {orders.length === 0 ? (
                                 <div className="p-12 text-center text-gray-400 italic font-light">
-                                    No has realizado ningún pedido todavía.
+                                    Encara no has realitzat cap comanda.
                                 </div>
                             ) : (
                                 <table className="w-full text-left">
                                     <thead className="bg-gray-50 border-b border-gray-100">
                                         <tr>
                                             <th className="px-6 py-4 text-[10px] uppercase tracking-widest text-gray-400">ID</th>
-                                            <th className="px-6 py-4 text-[10px] uppercase tracking-widest text-gray-400">Fecha</th>
+                                            <th className="px-6 py-4 text-[10px] uppercase tracking-widest text-gray-400">Data</th>
                                             <th className="px-6 py-4 text-[10px] uppercase tracking-widest text-gray-400">Total</th>
-                                            <th className="px-6 py-4 text-[10px] uppercase tracking-widest text-gray-400">Estado</th>
+                                            <th className="px-6 py-4 text-[10px] uppercase tracking-widest text-gray-400">Estat</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-100">
                                         {orders.map(order => (
                                             <tr key={order._id} className="hover:bg-gray-50 transition-colors">
                                                 <td className="px-6 py-4 text-xs font-mono text-gray-500">#{order._id.slice(-6)}</td>
-                                                <td className="px-6 py-4 text-sm font-light">{new Date(order.createdAt).toLocaleDateString()}</td>
+                                                <td className="px-6 py-4 text-sm font-light">{new Date(order.createdAt).toLocaleDateString('ca-ES')}</td>
                                                 <td className="px-6 py-4 text-sm font-medium">{order.total.toFixed(2)}€</td>
                                                 <td className="px-6 py-4">
-                                                    <span className={`text-[9px] uppercase tracking-widest px-2 py-1 ${order.pagat ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                                                        {order.pagat ? 'Pagado' : 'Pendiente'}
+                                                    <span className={`text-[9px] uppercase tracking-widest px-2 py-1 ${ESTAT_COLORS[order.estat] || 'bg-gray-100 text-gray-500'}`}>
+                                                        {ESTAT_LABELS[order.estat] || order.estat}
                                                     </span>
                                                 </td>
                                             </tr>

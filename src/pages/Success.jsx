@@ -1,10 +1,39 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
+import { useCart } from '../pages/CartContext';
+
+const API_CONFIRM_URL = 'http://localhost:3000/api/checkout/confirm-payment';
 
 // Sessió 17 - Exercici 4.1: Flux de checkout (frontend)
 export default function Success() {
+    const { clearCart } = useCart();
+    const [searchParams] = useSearchParams();
+    const confirmedRef = useRef(false);
+
+    useEffect(() => {
+        // Evitem cridar-ho dues vegades (StrictMode)
+        if (confirmedRef.current) return;
+        confirmedRef.current = true;
+
+        const sessionId = searchParams.get('session_id');
+        const token = localStorage.getItem('authToken');
+
+        // Netejar la cistella sempre que arribi aquí
+        clearCart();
+
+        // Confirmar el pagament al backend via session_id (fallback per a dev local)
+        if (sessionId && token) {
+            fetch(`${API_CONFIRM_URL}?session_id=${sessionId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+                .then(res => res.json())
+                .then(data => console.log('Pagament confirmat:', data))
+                .catch(err => console.error('Error confirmant pagament:', err));
+        }
+    }, [clearCart, searchParams]);
+
     return (
         <>
             <NavBar />
@@ -21,10 +50,10 @@ export default function Success() {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
                     <Link
-                        to="/"
+                        to="/dashboard"
                         className="bg-gray-900 text-white py-4 px-10 hover:bg-black transition-all text-[11px] uppercase tracking-[0.3em] font-medium text-center"
                     >
-                        Tornar a l'Inici
+                        Veure les meves Comandes
                     </Link>
                     <Link
                         to="/shop"
