@@ -1,0 +1,34 @@
+# Fitxers que Docker NO ha de copiar al context de build
+# Això fa que el build sigui molt més ràpid
+
+# Dependencies (es reinstal·len dins el contenidor)
+node_modules/
+
+# Build anterior (es regenerarà dins el contenidor)
+dist/
+dist-ssr/
+
+# Fitxers d'entorn
+.env
+.env.*
+
+# Logs
+*.log
+npm-debug.log*
+
+# Control de versions
+.git/
+.gitignore
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests
+*.test.js
+*.spec.js
+README.md

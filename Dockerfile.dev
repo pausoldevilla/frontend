@@ -1,0 +1,19 @@
+# ─── Dockerfile de desenvolupament ─────────────────────────────────────────
+# Usa el servidor de Vite per hot-reload automàtic
+
+FROM node:20-alpine
+
+WORKDIR /app
+
+ENV NODE_ENV=development
+
+COPY package*.json ./
+RUN npm ci
+
+# El codi font es munta com a volum (no es copia aquí)
+# Vite detectarà els canvis i actualitzarà el navegador automàticament
+
+EXPOSE 5173
+
+# --host permet que Vite accepti connexions de fora del contenidor
+CMD ["npx", "vite", "--host"]
