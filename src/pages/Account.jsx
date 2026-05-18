@@ -54,7 +54,6 @@ export default function Account() {
                 name: data.nom,
                 email: data.email,
                 memberSince: data.createdAt ? new Date(data.createdAt).toLocaleDateString('es-ES') : 'N/A',
-                titol: data.titol || '',
                 dataNaixement: data.dataNaixement ? new Date(data.dataNaixement).toLocaleDateString('es-ES') : 'N/A',
                 telefon: data.telefon || 'N/A',
                 adreca: data.adreca,
@@ -79,7 +78,7 @@ export default function Account() {
         }
 
         const storedData = localStorage.getItem('currentUserData');
-        const needsRefresh = !storedData || !JSON.parse(storedData).adreca || !JSON.parse(storedData).titol;
+        const needsRefresh = !storedData || !JSON.parse(storedData).adreca;
 
         if (needsRefresh) {
             fetchUserData(userToken);
@@ -137,7 +136,7 @@ export default function Account() {
                     <div className="bg-white border border-gray-100 p-6 mb-10 space-y-4">
                         <div className="flex flex-col">
                             <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 font-medium">Nombre</span>
-                            <span className="text-base font-light">{userData.titol} {userData.name}</span>
+                            <span className="text-base font-light">{userData.name}</span>
                         </div>
                         <div className="flex flex-col">
                             <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 font-medium">Email</span>

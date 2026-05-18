@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://localhost:3000', // todo lo que vaya a /api se redirige al backend
+      '/api': 'http://backend:3000', // En Docker, fem servir el nom del servei
     },
   },
 });

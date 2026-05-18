@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../pages/CartContext";
 
 export default function NavBar() {
@@ -10,6 +10,7 @@ export default function NavBar() {
     const [showSearch, setShowSearch] = useState(false);
     const [menuMobileOpen, setMenuMobileOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userRole, setUserRole] = useState(null);
 
     const navigate = useNavigate();
     const { getCartCount } = useCart() || { getCartCount: () => 0 };
@@ -19,8 +20,10 @@ export default function NavBar() {
         setRecentSearches(stored);
 
         const userToken = localStorage.getItem("authToken");
+        const userData = JSON.parse(localStorage.getItem("currentUserData") || "null");
         setIsLoggedIn(!!userToken);
-
+        setUserRole(userData?.rol || null);
+        
         fetch("/api/products")
             .then(res => res.json())
             .then(data => {
@@ -30,6 +33,11 @@ export default function NavBar() {
             })
             .catch(err => console.error("Error fetching for live search:", err));
     }, []);
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const activeTab = queryParams.get('tab') || 'overview';
+    const isAdmin = userRole === "admin";
 
     // Scroll lock
     useEffect(() => {
@@ -118,42 +126,87 @@ export default function NavBar() {
     return (
         <header className={`fixed top-0 left-0 w-full border-b border-gray-200 z-50 bg-white transition-transform duration-500 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
             {/* Desktop Menu */}
-            <div className="hidden lg:flex justify-center items-center p-3 relative bg-white shadow">
-                <div className="absolute left-10 flex gap-6 items-center">
-                    <button onClick={() => setShowSearch(!showSearch)} className="text-gray-800 hover:text-red-900 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-                            <path d="M781.69-136.92 530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14-102.55 0-173.58-71.01-71.03-71.01-71.03-173.54 0-102.52 71.01-173.6 71.01-71.07 173.54-71.07 102.52 0 173.6 71.03 71.07 71.03 71.07 173.58 0 42.85-14.38 81.85-14.39 39-38.39 67.84l251.23 251.23-42.15 42.16ZM380.77-395.38q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z" />
-                        </svg>
-                    </button>
-                    {leftMenuItems.map(item => (
-                        <Link key={item.name} to={item.path} className="text-gray-800 hover:text-black transition-colors uppercase text-[11px] tracking-[0.2em] font-medium">
-                            {item.name}
-                        </Link>
-                    ))}
-                </div>
+            <div className={`hidden lg:flex items-center p-3 bg-white shadow ${isAdmin ? "justify-between px-10 py-4" : "justify-center relative"}`}>
+                {isAdmin ? (
+                    <>
+                        <div className="flex items-center gap-8">
+                            <div className="logo font-serif font-bold tracking-wider flex flex-col items-center justify-center">
+                                <img src="/img/logo.png" className="w-10 h-10" alt="Logo Soldevilla" />
+                                <span className="uppercase tracking-[0.3em] text-[10px] mt-1 text-black font-bold">soldevilla</span>
+                            </div>
+                            <div className="h-8 w-px bg-gray-200"></div>
+                            <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-gray-400">
+                                Panel de Control
+                            </span>
+                        </div>
 
-                <div className="logo font-serif font-bold text-lg tracking-wider flex flex-col items-center justify-center">
-                    <Link to="/" className="flex flex-col items-center text-black no-underline">
-                        <img src="/img/logo.png" className="w-12 h-12" alt="Logo Soldevilla" />
-                        <span className="uppercase tracking-[0.3em] text-sm mt-1">soldevilla</span>
-                    </Link>
-                </div>
+                        <div className="flex gap-8 items-center">
+                            {[
+                                { id: 'overview', label: 'Resumen' },
+                                { id: 'users', label: 'Usuarios' },
+                                { id: 'products', label: 'Productos' },
+                                { id: 'orders', label: 'Pedidos' }
+                            ].map(tab => (
+                                <Link 
+                                    key={tab.id}
+                                    to={`/admin?tab=${tab.id}`} 
+                                    className={`text-black transition-colors uppercase text-[11px] tracking-[0.2em] font-medium pb-1 ${activeTab === tab.id ? 'border-b border-black' : 'text-gray-400 hover:text-black border-b border-transparent'}`}
+                                >
+                                    {tab.label}
+                                </Link>
+                            ))}
+                            <button 
+                                onClick={() => {
+                                    localStorage.removeItem('authToken');
+                                    localStorage.removeItem('currentUserData');
+                                    navigate('/login');
+                                    window.location.reload();
+                                }} 
+                                className="text-red-600 hover:text-red-800 transition-colors uppercase text-[11px] tracking-[0.2em] font-medium"
+                            >
+                                Cerrar Sesión
+                            </button>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className="absolute left-10 flex gap-6 items-center">
+                            <button onClick={() => setShowSearch(!showSearch)} className="text-gray-800 hover:text-red-900 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+                                    <path d="M781.69-136.92 530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14-102.55 0-173.58-71.01-71.03-71.01-71.03-173.54 0-102.52 71.01-173.6 71.01-71.07 173.54-71.07 102.52 0 173.6 71.03 71.07 71.03 71.07 173.58 0 42.85-14.38 81.85-14.39 39-38.39 67.84l251.23 251.23-42.15 42.16ZM380.77-395.38q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z" />
+                                </svg>
+                            </button>
+                            {leftMenuItems.map(item => (
+                                <Link key={item.name} to={item.path} className="text-gray-800 hover:text-black transition-colors uppercase text-[11px] tracking-[0.2em] font-medium">
+                                    {item.name}
+                                </Link>
+                            ))}
+                        </div>
 
-                <div className="absolute right-10 flex gap-6 items-center">
-                    {rightMenuItems.map(item => (
-                        <Link key={item.name} to={item.path} className="text-gray-800 hover:text-black transition-colors uppercase text-[11px] tracking-[0.2em] font-medium">
-                            {item.name}
-                        </Link>
-                    ))}
-                    <Link to={accountRoute} className="hover:text-black text-gray-800 uppercase text-[11px] tracking-[0.2em] font-medium">Mi cuenta</Link>
+                        <div className="logo font-serif font-bold text-lg tracking-wider flex flex-col items-center justify-center">
+                            <Link to="/" className="flex flex-col items-center text-black no-underline">
+                                <img src="/img/logo.png" className="w-12 h-12" alt="Logo Soldevilla" />
+                                <span className="uppercase tracking-[0.3em] text-sm mt-1">soldevilla</span>
+                            </Link>
+                        </div>
 
-                    <Link to="/cart" className="relative text-gray-800 hover:text-red-900 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-                            <path d="M286.15-97.69q-29.15 0-49.57-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.57-20.42 29.16 0 49.58 20.42 20.42 20.42 20.42 49.58 0 29.15-20.42 49.57-20.42 20.43-49.58 20.43Zm387.7 0q-29.16 0-49.58-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.58-20.42 29.15 0 49.57 20.42t20.42 49.58q0 29.15-20.42 49.57Q703-97.69 673.85-97.69ZM240.61-730 342-517.69h272.69q3.46 0 6.16-1.73 2.69-1.73 4.61-4.81l107.31-195q2.31-4.23.38-7.5-1.92-3.27-6.54-3.27h-486Zm-28.76-60h555.38q24.54 0 37.11 20.89 12.58 20.88 1.2 42.65L677.38-494.31q-9.84 17.31-26.03 26.96-16.2 9.66-35.5 9.66H324l-46.31 84.61q-3.08 4.62-.19 10 2.88 5.39 8.65 5.39h457.69v60H286.15q-40 0-60.11-34.5-20.12-34.5-1.42-68.89l57.07-102.61L136.16-810H60v-60h113.85l38 80ZM342-517.69h280-280Z" />
-                        </svg>
-                        {getCartCount() > 0 && <span className="absolute -top-2 -right-2 bg-red-900 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{getCartCount()}</span>}
-                    </Link>
-                </div>
+                        <div className="absolute right-10 flex gap-6 items-center">
+                            {rightMenuItems.map(item => (
+                                <Link key={item.name} to={item.path} className="text-gray-800 hover:text-black transition-colors uppercase text-[11px] tracking-[0.2em] font-medium">
+                                    {item.name}
+                                </Link>
+                            ))}
+                            <Link to={accountRoute} className="hover:text-black text-gray-800 uppercase text-[11px] tracking-[0.2em] font-medium">Mi cuenta</Link>
+
+                            <Link to="/cart" className="relative text-gray-800 hover:text-red-900 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+                                    <path d="M286.15-97.69q-29.15 0-49.57-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.57-20.42 29.16 0 49.58 20.42 20.42 20.42 20.42 49.58 0 29.15-20.42 49.57-20.42 20.43-49.58 20.43Zm387.7 0q-29.16 0-49.58-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.58-20.42 29.15 0 49.57 20.42t20.42 49.58q0 29.15-20.42 49.57Q703-97.69 673.85-97.69ZM240.61-730 342-517.69h272.69q3.46 0 6.16-1.73 2.69-1.73 4.61-4.81l107.31-195q2.31-4.23.38-7.5-1.92-3.27-6.54-3.27h-486Zm-28.76-60h555.38q24.54 0 37.11 20.89 12.58 20.88 1.2 42.65L677.38-494.31q-9.84 17.31-26.03 26.96-16.2 9.66-35.5 9.66H324l-46.31 84.61q-3.08 4.62-.19 10 2.88 5.39 8.65 5.39h457.69v60H286.15q-40 0-60.11-34.5-20.12-34.5-1.42-68.89l57.07-102.61L136.16-810H60v-60h113.85l38 80ZM342-517.69h280-280Z" />
+                                </svg>
+                                {getCartCount() > 0 && <span className="absolute -top-2 -right-2 bg-red-900 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{getCartCount()}</span>}
+                            </Link>
+                        </div>
+                    </>
+                )}
             </div>
 
             {/* Search Submenu (Full Width Below) */}
@@ -223,24 +276,48 @@ export default function NavBar() {
 
             {/* Mobile Header Toolbar */}
             <div className="flex lg:hidden justify-between items-center px-4 h-16 bg-white shadow-sm relative z-50">
-                <div className="flex gap-4">
-                    <button onClick={() => { setMenuMobileOpen(!menuMobileOpen); setShowSearch(false); }} className="text-gray-800">
-                        {menuMobileOpen ? "✕" : <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M140-254.62v-59.99h680v59.99H140ZM140-450v-60h680v60H140Zm0-195.39v-59.99h680v59.99H140Z" /></svg>}
-                    </button>
-                    <button onClick={() => { setShowSearch(!showSearch); setMenuMobileOpen(false); }} className="text-gray-800">
-                        {showSearch ? "✕" : <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M781.69-136.92 530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14-102.55 0-173.58-71.01-71.03-71.01-71.03-173.54 0-102.52 71.01-173.6 71.01-71.07 173.54-71.07 102.52 0 173.6 71.03 71.07 71.03 71.07 173.58 0 42.85-14.38 81.85-14.39 39-38.39 67.84l251.23 251.23-42.15 42.16ZM380.77-395.38q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z" /></svg>}
-                    </button>
-                </div>
-                <Link to="/" onClick={() => { setMenuMobileOpen(false); setShowSearch(false); }} className="flex items-center">
-                    <img src="/img/logo.png" className="w-8 h-8" alt="Logo Soldevilla" />
-                </Link>
-                <div className="flex gap-4">
-                    <Link to={accountRoute} onClick={() => { setMenuMobileOpen(false); setShowSearch(false); }} className="text-gray-800"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-492.31q-57.75 0-98.87-41.12Q340-574.56 340-632.31q0-57.75 41.13-98.87 41.12-41.13 98.87-41.13 57.75 0 98.87 41.13Q620-690.06 620-632.31q0 57.75-41.13 98.88-41.12 41.12-98.87 41.12ZM180-187.69v-88.93q0-29.38 15.96-54.42 15.96-25.04 42.66-38.5 59.3-29.07 119.65-43.61 60.35-14.54 121.73-14.54t121.73 14.54q60.35 14.54 119.65 43.61 26.7 13.46 42.66 38.5Q780-306 780-276.62v88.93H180Zm60-60h480v-28.93q0-12.15-7.04-22.5-7.04-10.34-19.11-16.88-51.7-25.46-105.42-38.58Q534.7-367.69 480-367.69q-54.7 0-108.43 13.11-53.72 13.12-105.42 38.58-12.07 6.54-19.11 16.88-7.04 10.35-7.04 22.5v28.93Zm240-304.62q33 0 56.5-23.5t23.5-56.5q0-33-23.5-56.5t-56.5-23.5q-33 0-56.5 23.5t-23.5 56.5q0 33 23.5 56.5t56.5 23.5Zm0-80Zm0 384.62Z" /></svg></Link>
-                    <Link to="/cart" onClick={() => { setMenuMobileOpen(false); setShowSearch(false); }} className="relative text-gray-800">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M286.15-97.69q-29.15 0-49.57-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.57-20.42 29.16 0 49.58 20.42 20.42 20.42 20.42 49.58 0 29.15-20.42 49.57-20.42 20.43-49.58 20.43Zm387.7 0q-29.16 0-49.58-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.58-20.42 29.15 0 49.57 20.42t20.42 49.58q0 29.15-20.42 49.57Q703-97.69 673.85-97.69ZM240.61-730 342-517.69h272.69q3.46 0 6.16-1.73 2.69-1.73 4.61-4.81l107.31-195q2.31-4.23.38-7.5-1.92-3.27-6.54-3.27h-486Zm-28.76-60h555.38q24.54 0 37.11 20.89 12.58 20.88 1.2 42.65L677.38-494.31q-9.84 17.31-26.03 26.96-16.2 9.66-35.5 9.66H324l-46.31 84.61q-3.08 4.62-.19 10 2.88 5.39 8.65 5.39h457.69v60H286.15q-40 0-60.11-34.5-20.12-34.5-1.42-68.89l57.07-102.61L136.16-810H60v-60h113.85l38 80ZM342-517.69h280-280Z" /></svg>
-                        {getCartCount() > 0 && <span className="absolute -top-1 -right-1 bg-red-900 text-white text-[8px] font-bold w-3 h-3 flex items-center justify-center rounded-full">{getCartCount()}</span>}
-                    </Link>
-                </div>
+                {isAdmin ? (
+                    <>
+                        <div className="flex items-center gap-2">
+                             <span className="text-[9px] uppercase tracking-[0.2em] font-bold text-black border-l-2 border-black pl-2">Panel</span>
+                        </div>
+                        <div className="logo font-serif font-bold text-sm tracking-wider">
+                            <span className="uppercase tracking-[0.2em]">soldevilla</span>
+                        </div>
+                        <button 
+                            onClick={() => {
+                                localStorage.removeItem('authToken');
+                                localStorage.removeItem('currentUserData');
+                                navigate('/login');
+                                window.location.reload();
+                            }}
+                            className="text-red-600 text-[9px] uppercase tracking-widest font-medium"
+                        >
+                            Salir
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <div className="flex gap-4">
+                            <button onClick={() => { setMenuMobileOpen(!menuMobileOpen); setShowSearch(false); }} className="text-gray-800">
+                                {menuMobileOpen ? "✕" : <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M140-254.62v-59.99h680v59.99H140ZM140-450v-60h680v60H140Zm0-195.39v-59.99h680v59.99H140Z" /></svg>}
+                            </button>
+                            <button onClick={() => { setShowSearch(!showSearch); setMenuMobileOpen(false); }} className="text-gray-800">
+                                {showSearch ? "✕" : <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M781.69-136.92 530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14-102.55 0-173.58-71.01-71.03-71.01-71.03-173.54 0-102.52 71.01-173.6 71.01-71.07 173.54-71.07 102.52 0 173.6 71.03 71.07 71.03 71.07 173.58 0 42.85-14.38 81.85-14.39 39-38.39 67.84l251.23 251.23-42.15 42.16ZM380.77-395.38q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z" /></svg>}
+                            </button>
+                        </div>
+                        <Link to="/" onClick={() => { setMenuMobileOpen(false); setShowSearch(false); }} className="flex items-center">
+                            <img src="/img/logo.png" className="w-8 h-8" alt="Logo Soldevilla" />
+                        </Link>
+                        <div className="flex gap-4">
+                            <Link to={accountRoute} onClick={() => { setMenuMobileOpen(false); setShowSearch(false); }} className="text-gray-800"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-492.31q-57.75 0-98.87-41.12Q340-574.56 340-632.31q0-57.75 41.13-98.87 41.12-41.13 98.87-41.13 57.75 0 98.87 41.13Q620-690.06 620-632.31q0 57.75-41.13 98.88-41.12 41.12-98.87 41.12ZM180-187.69v-88.93q0-29.38 15.96-54.42 15.96-25.04 42.66-38.5 59.3-29.07 119.65-43.61 60.35-14.54 121.73-14.54t121.73 14.54q60.35 14.54 119.65 43.61 26.7 13.46 42.66 38.5Q780-306 780-276.62v88.93H180Zm60-60h480v-28.93q0-12.15-7.04-22.5-7.04-10.34-19.11-16.88-51.7-25.46-105.42-38.58Q534.7-367.69 480-367.69q-54.7 0-108.43 13.11-53.72 13.12-105.42 38.58-12.07 6.54-19.11 16.88-7.04 10.35-7.04 22.5v28.93Zm240-304.62q33 0 56.5-23.5t23.5-56.5q0-33-23.5-56.5t-56.5-23.5q-33 0-56.5 23.5t-23.5 56.5q0 33 23.5 56.5t56.5 23.5Zm0-80Zm0 384.62Z" /></svg></Link>
+                            <Link to="/cart" onClick={() => { setMenuMobileOpen(false); setShowSearch(false); }} className="relative text-gray-800">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M286.15-97.69q-29.15 0-49.57-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.57-20.42 29.16 0 49.58 20.42 20.42 20.42 20.42 49.58 0 29.15-20.42 49.57-20.42 20.43-49.58 20.43Zm387.7 0q-29.16 0-49.58-20.43-20.42-20.42-20.42-49.57 0-29.16 20.42-49.58 20.42-20.42 49.58-20.42 29.15 0 49.57 20.42t20.42 49.58q0 29.15-20.42 49.57Q703-97.69 673.85-97.69ZM240.61-730 342-517.69h272.69q3.46 0 6.16-1.73 2.69-1.73 4.61-4.81l107.31-195q2.31-4.23.38-7.5-1.92-3.27-6.54-3.27h-486Zm-28.76-60h555.38q24.54 0 37.11 20.89 12.58 20.88 1.2 42.65L677.38-494.31q-9.84 17.31-26.03 26.96-16.2 9.66-35.5 9.66H324l-46.31 84.61q-3.08 4.62-.19 10 2.88 5.39 8.65 5.39h457.69v60H286.15q-40 0-60.11-34.5-20.12-34.5-1.42-68.89l57.07-102.61L136.16-810H60v-60h113.85l38 80ZM342-517.69h280-280Z" /></svg>
+                                {getCartCount() > 0 && <span className="absolute -top-1 -right-1 bg-red-900 text-white text-[8px] font-bold w-3 h-3 flex items-center justify-center rounded-full">{getCartCount()}</span>}
+                            </Link>
+                        </div>
+                    </>
+                )}
             </div>
 
             {/* Mobile Navigation Menu */}

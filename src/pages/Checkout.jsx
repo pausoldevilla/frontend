@@ -56,7 +56,7 @@ export default function Checkout() {
                     const data = apiRes.usuari || apiRes;
                     setShipping(prev => ({
                         ...prev,
-                        nom: `${data.titol || ''} ${data.nom || ''}`.trim(),
+                        nom: (data.nom || '').trim(),
                         carrer: data.adreca?.carrer || '',
                         ciutat: data.adreca?.ciutat || '',
                         codiPostal: data.adreca?.codiPostal || '',

@@ -40,7 +40,12 @@ export default function Login() {
       localStorage.setItem('authToken', authToken);
       localStorage.setItem('currentUserData', JSON.stringify(loginData.usuari));
 
-      navigate('/');
+      // Redirigir segons el rol
+      if (loginData.usuari?.rol === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
 
     } catch (err) {
       console.error("Fallo en la autenticación:", err.message);

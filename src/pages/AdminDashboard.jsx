@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { 
@@ -30,7 +30,9 @@ const API_BASE = 'http://localhost:3000/api';
 
 export default function AdminDashboard() {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState('overview');
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const activeTab = queryParams.get('tab') || 'overview';
     const [data, setData] = useState({
         users: [],
         products: [],
@@ -242,27 +244,7 @@ export default function AdminDashboard() {
                     </div>
                 </div>
 
-                {/* Editorial Tabs */}
-                <div className="flex space-x-12 mb-16 border-b border-gray-200 overflow-x-auto no-scrollbar">
-                    {[
-                        { id: 'overview', label: 'Resumen' },
-                        { id: 'users', label: 'Usuarios' },
-                        { id: 'products', label: 'Productos' },
-                        { id: 'orders', label: 'Pedidos' }
-                    ].map(tab => (
-                        <button 
-                            key={tab.id}
-                            onClick={() => setActiveTab(tab.id)}
-                            className={`pb-4 text-[11px] uppercase tracking-[0.3em] font-medium transition-all whitespace-nowrap ${
-                                activeTab === tab.id 
-                                ? 'border-b border-black text-black' 
-                                : 'text-gray-400 hover:text-gray-900 border-b border-transparent'
-                            }`}
-                        >
-                            {tab.label}
-                        </button>
-                    ))}
-                </div>
+                {/* Tabs removed and moved to NavBar */}
 
                 {isLoading ? (
                     <div className="py-24 text-lg font-light text-gray-500">
@@ -292,8 +274,19 @@ export default function AdminDashboard() {
                                                     <td className="py-6 text-lg font-medium tracking-wide text-gray-900">{order.usuari?.nom || 'Anónimo'}</td>
                                                     <td className="py-6 text-base font-light text-gray-600">{order.total.toFixed(2)} €</td>
                                                     <td className="py-6 text-right">
-                                                        <span className={`text-[10px] uppercase tracking-[0.2em] font-medium ${order.pagat ? 'text-gray-900' : 'text-gray-400'}`}>
-                                                            {order.pagat ? 'Pagado' : 'Pendiente'}
+                                                        <span className={`text-[10px] uppercase tracking-[0.2em] font-medium ${
+                                                            order.estat === 'pagat' ? 'text-green-600' :
+                                                            order.estat === 'pendent_pagament' ? 'text-gray-400' :
+                                                            order.estat === 'cancelat' ? 'text-red-500' :
+                                                            'text-gray-600'
+                                                        }`}>
+                                                            {order.estat === 'pagat' ? 'Pagado' :
+                                                             order.estat === 'pendent_pagament' ? 'Pendiente' :
+                                                             order.estat === 'procesant' ? 'Procesando' :
+                                                             order.estat === 'enviat' ? 'Enviado' :
+                                                             order.estat === 'completat' ? 'Completado' :
+                                                             order.estat === 'cancelat' ? 'Cancelado' :
+                                                             order.estat}
                                                         </span>
                                                     </td>
                                                 </tr>

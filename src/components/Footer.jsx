@@ -2,6 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
+  const userData = JSON.parse(localStorage.getItem("currentUserData") || "null");
+  const isAdmin = userData?.rol === "admin";
+
+  if (isAdmin) {
+    return (
+      <footer className="bg-white border-t border-gray-100 py-10 mt-20">
+        <div className="container mx-auto px-6 flex flex-col items-center">
+            <div className="flex flex-col items-center mb-8 opacity-40 grayscale">
+              <img src="/img/logo.png" className="w-8 h-8" alt="Logo Soldevilla" />
+              <span className="uppercase tracking-[0.3em] text-[9px] mt-2 font-serif font-bold text-black">
+                soldevilla
+              </span>
+            </div>
+            <div className="text-[9px] text-gray-400 uppercase tracking-[0.3em] font-light">
+              © {new Date().getFullYear()} Soldevilla Panel de Administración.
+            </div>
+        </div>
+      </footer>
+    );
+  }
   return (
     <footer className="bg-gray-100 border-t border-gray-300">
 

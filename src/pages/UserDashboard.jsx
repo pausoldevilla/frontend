@@ -102,7 +102,7 @@ export default function UserDashboard() {
                             <div className="bg-white p-8 border border-gray-100 space-y-4">
                                 <div>
                                     <span className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">Nom</span>
-                                    <span className="text-lg font-light">{userData?.titol} {userData?.nom}</span>
+                                    <span className="text-lg font-light">{userData?.nom}</span>
                                 </div>
                                 <div>
                                     <span className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">Email</span>

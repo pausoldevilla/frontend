@@ -10,7 +10,7 @@ export default function Register() {
     const [contrasenya, setContrasenya] = useState('');
     const [confirmContrasenya, setConfirmContrasenya] = useState('');
 
-    const [titol, setTitol] = useState('Sr.');
+
     const [dataNaixement, setDataNaixement] = useState('');
     const [prefixTelefon, setPrefixTelefon] = useState('+34');
     const [telefon, setTelefon] = useState('');
@@ -43,7 +43,6 @@ export default function Register() {
                 },
                 body: JSON.stringify({
                     nom: name,
-                    titol,
                     email,
                     contrasenya,
                     dataNaixement: dataNaixement || undefined,
@@ -110,36 +109,19 @@ export default function Register() {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
 
-                    <div className="flex space-x-4">
-                        <div className="w-1/4">
-                            <label htmlFor="titol" className="block text-sm font-medium text-gray-700 mb-2">Titulo</label>
-                            <select
-                                id="titol"
-                                name="titol"
-                                value={titol}
-                                onChange={(e) => setTitol(e.target.value)}
-                                className="w-full px-4 py-2 border border-gray-300"
-                            >
-                                <option>Sr.</option>
-                                <option>Sra.</option>
-                                <option>Srta.</option>
-                            </select>
-                        </div>
-
-                        <div className="w-3/4">
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
-                            <input
-                                id="name"
-                                name="name"
-                                type="text"
-                                required
-                                autoComplete="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                className="w-full px-4 py-2 border border-gray-300"
-                                placeholder="Tu nombre y apellido"
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            required
+                            autoComplete="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="w-full px-4 py-2 border border-gray-300"
+                            placeholder="Tu nombre y apellido"
+                        />
                     </div>
 
                     <div>
